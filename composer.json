@@ -1,0 +1,38 @@
+{
+    "name": "nicoren/cron-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony cron",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicolas RENAULT",
+            "email": "nrenault@tangkoko.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.3",
+        "symfony/framework-bundle": "^4.4|^5.0|^5.1|^5.2",
+        "doctrine/mongodb-odm-bundle": "^4.1|4.2|4.3",
+        "doctrine/doctrine-bundle": "^2.2|2.3"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Nicoren\\CronBundle\\" : "src/"
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": { "Nicoren\\CronBundle\\Tests\\": "Tests/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "symfony/symfony": "^4.4|^5.0|^5.1|^5.2"
+    }
+}
