@@ -3,7 +3,7 @@ Cron is schedule integration for symfony.
 ===========
 
  [![Packagist](https://img.shields.io/packagist/v/nicoren/cron-bundle.svg?style=flat-square)](https://packagist.org/packages/nicoren/cron-bundle)
- [![Build Status](https://img.shields.io/travis/Nicoren/Symfony-Bundle.svg?style=flat-square)](https://travis-ci.org/Nicoren/Symfony-Bundle)
+ [![Build Status](https://img.shields.io/travis/Nicoren/Cron-Bundle.svg?style=flat-square)](https://travis-ci.org/Nicoren/Cron-Bundle)
  [![Packagist](https://img.shields.io/packagist/dt/Nicoren/Cron-Bundle.svg?style=flat-square)](https://packagist.org/packages/nicoren/cron-bundle)
  [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
  
