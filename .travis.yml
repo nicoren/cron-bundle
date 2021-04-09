@@ -15,19 +15,7 @@ matrix:
     - php: 7.3
       env: SYMFONY_VERSION=5.0.*
     - php: 7.4
-      env: SYMFONY_VERSION=5.0.*
-    - php: 8.0
-      env: SYMFONY_VERSION=5.0.*
-    - php: 7.3
       env: SYMFONY_VERSION=5.1.*
-    - php: 7.4
-      env: SYMFONY_VERSION=5.1.*
-    - php: 8.0
-      env: SYMFONY_VERSION=5.1.*
-    - php: 7.3
-      env: SYMFONY_VERSION=5.2.*
-    - php: 7.4
-      env: SYMFONY_VERSION=5.2.*
     - php: 8.0
       env: SYMFONY_VERSION=5.2.* 
   allow_failures:
@@ -45,6 +33,7 @@ before_install:
   - echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 before_script:
+  - pecl -q install mongo && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - composer self-update
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
 
