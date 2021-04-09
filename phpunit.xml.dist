@@ -3,7 +3,7 @@
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="CronTab Test Suite">
-            <directory>Tests</directory>
+            <directory>src/Tests</directory>
         </testsuite>
     </testsuites>
     <php>
