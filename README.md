@@ -18,11 +18,11 @@ With symfony Flex :
 
 ```shell
 composer config extra.symfony.allow-contrib true
-composer require cron/cron-bundle
+composer require nicoren/cron-bundle
 ```
 without symfony Flex :
 ```shell
-composer require cron/cron-bundle
+composer require nicoren/cron-bundle
 ```
 2. Add the bundle to your application kernel :
  **If you don't use Symfony flex**
