@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                    http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+    <mapped-superclass name="Nicoren\CronBundle\Model\Job" collection="jobs">
+        <id />
+        <field field-name="name" name="name" type="string" />
+        <field field-name="command" name="command" type="string" />
+        <field field-name="description" name="description" type="string" />
+        <field field-name="schedule" name="schedule" type="string" />
+        <field field-name="enabled" name="enabled" type="boolean" />
+        <field field-name="createdAt" name="createdAt" type="date" />
+        <indexes>
+            <index unique="false">
+                <key name="name" order="desc"/>
+                <option name="safe" value="true" />
+            </index>
+        </indexes>
+    </mapped-superclass>
+</doctrine-mongo-mapping>
