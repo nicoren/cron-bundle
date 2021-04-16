@@ -7,8 +7,8 @@
     <services>
         <defaults autowire="true" autoconfigure="true"/>
         <!-- JOb Manager service -->
-        <service id="Nicoren\Cron\Doctrine\JobManager"/>
-        <service id="Nicoren\Cron\Doctrine\JobManagerInterface" alias="Nicoren\Cron\Doctrine\JobManager"/>
+        <service id="Nicoren\CronBundle\Doctrine\JobManager"/>
+        <service id="Nicoren\CronBundle\Doctrine\JobManagerInterface" alias="Nicoren\CronBundle\Doctrine\JobManager"/>
         
     </services>
 </container>

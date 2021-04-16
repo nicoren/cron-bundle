@@ -6,11 +6,9 @@
  * @copyright (c) 2021 Tangkoko
  */
 
-namespace FOS\UserBundle\Doctrine;
+namespace Nicoren\CronBundle\Doctrine;
 
 
-use Doctrine\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectRepository;
 use Nicoren\CronBundle\Model\JobInterface;
 
 interface JobManagerInterface

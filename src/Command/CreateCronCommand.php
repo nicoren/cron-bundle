@@ -17,13 +17,8 @@
 namespace Nicoren\CronBundle\Command;
 
 use Exception;
-use FOS\UserBundle\Doctrine\JobManagerInterface;
+use Nicoren\CronBundle\Doctrine\JobManagerInterface;
 use Symfony\Component\Console\Command\Command;
-use Nicoren\CronBundle\Model\Job;
-use Symfony\Component\Console\Input\Input;
-use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
