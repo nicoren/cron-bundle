@@ -52,7 +52,7 @@ class NicorenCronExtension extends Extension
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-
+        $loader->load("services.xml");
         if (isset(self::$doctrineDrivers[$config['db_driver']])) {
             $loader->load('doctrine.xml');
             $container->setAlias('nicoren_cron.doctrine_registry', new Alias(self::$doctrineDrivers[$config['db_driver']]['registry'], false));
