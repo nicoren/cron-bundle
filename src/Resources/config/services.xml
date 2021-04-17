@@ -7,8 +7,11 @@
     <services>
         <defaults autowire="true" autoconfigure="true"/>
         <!-- JOb Manager service -->
-        <service id="Nicoren\CronBundle\Doctrine\JobManager"/>
-        <service id="Nicoren\CronBundle\Doctrine\JobManagerInterface" alias="Nicoren\CronBundle\Doctrine\JobManager"/>
+        <service id="nicoren_cron.job_manager.default" class="Nicoren\CronBundle\Doctrine\JobManager">
+            <argument type="service" id="nicoren_cron.object_manager" />
+            <argument>%nicoren_cron.model.job.class%</argument>
+        </service>
+        <service id="Nicoren\CronBundle\Doctrine\JobManagerInterface" alias="nicoren_cron.job_manager.default" public="false"/>
         
     </services>
 </container>

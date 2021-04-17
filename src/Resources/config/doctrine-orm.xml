@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults autowire="true" autoconfigure="true"/>
+               <!-- The factory is configured in the DI extension class to support more Symfony versions -->
+        <service id="nicoren_cron.doctrine.objectmanager_provider" class="Nicoren\CronBundle\Doctrine\ObjectManagerProvider" public="false">
+             <argument type="service" id="doctrine" />
+             <argument>%nicoren_cron.model_manager_name%</argument>
+        </service>
+    </services>
+    <doctrine:config>
+        <doctrine:orm>
+            <doctrine:resolve-target-entity interface="Nicoren\CronBundle\Model\JobInterface">Nicoren\CronBundle\Model\Job</doctrine:resolve-target-entity>
+        </doctrine:orm>
+    </doctrine:config>
+</container>

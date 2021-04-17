@@ -28,11 +28,25 @@ class NicorenCronBundle extends Bundle
         ];
 
         if (class_exists('Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')) {
-            $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings, ['nicoren_cron.model_manager_name'], 'nicoren_cron.backend_type_orm'));
+            $container->addCompilerPass(
+                DoctrineOrmMappingsPass::createXmlMappingDriver(
+                    $mappings,
+                    ['nicoren_cron.model_manager_name'],
+                    'nicoren_cron.backend_type_orm',
+                    ['NicorenCronBundle' => 'Nicoren\Cron\Doctrine']
+                )
+            );
         }
 
         if (class_exists('Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass')) {
-            $container->addCompilerPass(DoctrineMongoDBMappingsPass::createXmlMappingDriver($mappings, ['nicoren_cron.model_manager_name'], 'nicoren_cron.backend_type_mongodb'));
+            $container->addCompilerPass(
+                DoctrineMongoDBMappingsPass::createXmlMappingDriver(
+                    $mappings,
+                    ['nicoren_cron.model_manager_name'],
+                    'nicoren_cron.backend_type_mongodb',
+                    ['NicorenCronBundle' => 'Nicoren\Cron\Doctrine']
+                )
+            );
         }
     }
 }

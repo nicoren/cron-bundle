@@ -34,6 +34,7 @@ class CreateCronCommand extends Command
     const OPTION_COMMAND = "command";
     const OPTION_SCHEDULE = "schedule";
     const OPTION_ENABLED = "enabled";
+    const OPTION_MAX_CONCURRENT = "max_concurrent";
 
 
     /**
@@ -60,7 +61,8 @@ class CreateCronCommand extends Command
             ->addOption(static::OPTION_COMMAND, null, InputOption::VALUE_REQUIRED, 'The job command')
             ->addOption(static::OPTION_SCHEDULE, null, InputOption::VALUE_REQUIRED, 'The job schedule')
             ->addOption(static::OPTION_DESCRIPTION, null, InputOption::VALUE_REQUIRED, 'The job description')
-            ->addOption(static::OPTION_ENABLED, null, InputOption::VALUE_REQUIRED, 'Is job enabled');
+            ->addOption(static::OPTION_ENABLED, null, InputOption::VALUE_REQUIRED, 'Is job enabled')
+            ->addOption(static::OPTION_MAX_CONCURRENT, null, InputOption::VALUE_REQUIRED, 'The maximum number of this job concurrent executions');
     }
 
     /**
@@ -74,7 +76,8 @@ class CreateCronCommand extends Command
                 ->setDescription($input->getOption(static::OPTION_DESCRIPTION))
                 ->setCommand($input->getOption(static::OPTION_COMMAND))
                 ->setEnabled($input->getOption(static::OPTION_ENABLED))
-                ->setSchedule($input->getOption(static::OPTION_SCHEDULE));
+                ->setSchedule($input->getOption(static::OPTION_SCHEDULE))
+                ->setMaxConcurrent($input->getOption(static::OPTION_MAX_CONCURRENT));
             $this->jobManager->save($job);
             $output->writeln("<info>job saved.</info>");
             return Command::SUCCESS;

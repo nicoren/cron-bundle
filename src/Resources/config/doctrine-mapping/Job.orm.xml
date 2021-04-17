@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Nicoren\CronBundle\Model\Job">
+    <entity name="Nicoren\CronBundle\Model\Job">
         <field name="name" column="name" type="string" length="255" />
         <field name="command" column="command" type="string" length="255" />
         <field name="description" column="description" type="text" nullable="true" />
@@ -19,5 +19,5 @@
                 <option name="default">CURRENT_TIMESTAMP</option>
             </options>
         </field>
-    </mapped-superclass>
+    </entity>
 </doctrine-mapping>
