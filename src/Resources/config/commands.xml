@@ -7,7 +7,7 @@
     <services>
         <defaults autowire="true" autoconfigure="true"/>
         <service id="nicoren_cron.command.create_cron" class="Nicoren\CronBundle\Command\CreateCronCommand">
-            <tag name="console.command" command="cron:cron:create" />
+            <tag name="console.command" command="cron:job:create" />
         </service>
     </services>
 

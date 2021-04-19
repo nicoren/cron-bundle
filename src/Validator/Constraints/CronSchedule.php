@@ -9,6 +9,11 @@ namespace Nicoren\CronBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * @Annotation
+ * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
+ */
 class CronSchedule extends Constraint
 {
+    public $message = 'This value has not crontab schedule format.';
 }

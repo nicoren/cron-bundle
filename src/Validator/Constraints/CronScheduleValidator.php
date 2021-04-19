@@ -31,6 +31,7 @@ class CronScheduleValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         $exprArr = $this->parseCronExpr($value);
+        $this->validateSchedule($exprArr);
     }
 
 
@@ -42,7 +43,7 @@ class CronScheduleValidator extends ConstraintValidator
      *
      * @return bool
      */
-    public function trySchedule(array $exprArr)
+    public function validateSchedule(array $exprArr)
     {
 
         if (count($exprArr) !== 5) {
@@ -138,7 +139,6 @@ class CronScheduleValidator extends ConstraintValidator
         if ($from === false || $to === false) {
             throw new CronException(sprintf('Invalid cron expression: %s', $expr));
         }
-
         return $index >= $from && $index <= $to && $index % $mod === 0;
     }
 

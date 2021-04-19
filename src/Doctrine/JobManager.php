@@ -12,6 +12,7 @@ namespace Nicoren\CronBundle\Doctrine;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Nicoren\CronBundle\Model\JobInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class JobManager implements JobManagerInterface
 {
@@ -26,14 +27,21 @@ class JobManager implements JobManagerInterface
     private $class;
 
     /**
+     *
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    /**
      * Constructor.
      *
      * @param string $class
      */
-    public function __construct(ObjectManager $om, $class)
+    public function __construct(ObjectManager $om, $class, ValidatorInterface $validator)
     {
         $this->objectManager = $om;
         $this->class = $class;
+        $this->validator = $validator;
     }
 
     /**
@@ -100,6 +108,7 @@ class JobManager implements JobManagerInterface
      */
     public function save(JobInterface $job, $andFlush = true)
     {
+        $this->validator->validate($job);
         $this->objectManager->persist($job);
         if ($andFlush) {
             $this->objectManager->flush();

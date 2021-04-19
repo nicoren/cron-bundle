@@ -43,8 +43,10 @@ class CreateCronCommand extends Command
      */
     protected $jobManager;
 
+
     public function __construct(
         JobManagerInterface $jobManager
+
     ) {
         parent::__construct();
         $this->jobManager = $jobManager;
