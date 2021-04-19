@@ -47,7 +47,7 @@ class CronScheduleValidator extends ConstraintValidator
     {
 
         if (count($exprArr) !== 5) {
-            return false;
+            throw new CronException(sprintf('Invalid cron expression: %s', implode(" ", $exprArr)));
         }
         $match = true;
         for ($i = 0; $i < count($exprArr); $i++) {
