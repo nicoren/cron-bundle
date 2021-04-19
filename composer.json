@@ -25,13 +25,10 @@
     "autoload": {
         "psr-4" : {
             "Nicoren\\CronBundle\\" : "src/"
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        }
     },
     "autoload-dev": {
-        "psr-4": { "Nicoren\\CronBundle\\Tests\\": "Tests/" }
+        "psr-4": { "Nicoren\\CronBundle\\Tests\\": "tests/" }
     },
     "extra": {
         "branch-alias": {
