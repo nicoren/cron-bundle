@@ -51,5 +51,5 @@ interface JobManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save(JobInterface $job, $andFlush = true);
+    public function save(JobInterface $job, $andFlush = true): void;
 }

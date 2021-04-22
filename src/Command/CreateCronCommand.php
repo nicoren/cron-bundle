@@ -57,7 +57,7 @@ class CreateCronCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('cron:create')
+        $this->setName('cron:job:create')
             ->setDescription('Create a cron job')
             ->addOption(static::OPTION_NAME, null, InputOption::VALUE_REQUIRED, 'The job name')
             ->addOption(static::OPTION_COMMAND, null, InputOption::VALUE_REQUIRED, 'The job command')
@@ -81,7 +81,7 @@ class CreateCronCommand extends Command
                 ->setSchedule($input->getOption(static::OPTION_SCHEDULE))
                 ->setMaxConcurrent($input->getOption(static::OPTION_MAX_CONCURRENT));
             $this->jobManager->save($job);
-            $output->writeln("<info>job saved.</info>");
+            $output->writeln("<info>Job saved.</info>");
             return Command::SUCCESS;
         } catch (Exception $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");

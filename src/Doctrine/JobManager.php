@@ -106,7 +106,7 @@ class JobManager implements JobManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save(JobInterface $job, $andFlush = true)
+    public function save(JobInterface $job, $andFlush = true): void
     {
         $this->validator->validate($job);
         $this->objectManager->persist($job);

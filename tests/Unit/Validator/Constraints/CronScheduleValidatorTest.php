@@ -11,6 +11,8 @@
 
 namespace Nicoren\CronBundle\Tests\Unit\Validator\Constraints;
 
+use Nicoren\CronBundle\Crontab\Scheduler;
+use Nicoren\CronBundle\Crontab\SchedulerInterface;
 use Nicoren\CronBundle\Exception\CronException;
 use Nicoren\CronBundle\Validator\Constraints\CronSchedule;
 use Nicoren\CronBundle\Validator\Constraints\CronScheduleValidator;
@@ -18,6 +20,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class CronScheduleValidatorTest extends ConstraintValidatorTestCase
 {
+
     /**
      * Test correct contab schedule
      *
@@ -52,7 +55,7 @@ class CronScheduleValidatorTest extends ConstraintValidatorTestCase
      */
     public function testCorrectScheduleWithDayOfWeek()
     {
-        $value = $this->validator->validate('*/20 * * * Sun,Mon,Tue,Wed,Thu,Fri', new CronSchedule(["message" => 'Invalid crontab expression.']));
+        $value = $this->validator->validate('*/5 * * * Sun,Mon,Tue,Wed,Thu,Fri', new CronSchedule(["message" => 'Invalid crontab expression.']));
         $this->assertEquals(
             null,
             $value,
@@ -62,6 +65,6 @@ class CronScheduleValidatorTest extends ConstraintValidatorTestCase
 
     protected function createValidator()
     {
-        return new CronScheduleValidator();
+        return new CronScheduleValidator(new Scheduler());
     }
 }

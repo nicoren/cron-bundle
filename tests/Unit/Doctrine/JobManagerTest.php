@@ -11,8 +11,6 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Nicoren\CronBundle\Doctrine\JobManager;
 use Nicoren\CronBundle\Model\Job;
-use Nicoren\CronBundle\Validator\Constraints\CronSchedule;
-use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -98,7 +96,6 @@ class JobManagerTest extends KernelTestCase
             ->method('findOneBy')
             ->with($this->equalTo(["id" => 123]))
             ->will($this->returnValue($this->document));
-
         $this->jobManager->findOneBy(["id" => 123]);
     }
 
@@ -115,8 +112,8 @@ class JobManagerTest extends KernelTestCase
             ->expects($this->any())
             ->method('findAll')
             ->will($this->returnValue([$this->document]));
-
         $this->jobManager->find();
+        $this->assertTrue(true);
     }
 
     /**
