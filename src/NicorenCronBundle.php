@@ -35,7 +35,7 @@ class NicorenCronBundle extends Bundle
                     $mappings,
                     ['nicoren_cron.model_manager_name'],
                     'nicoren_cron.backend_type_orm',
-                    ['NicorenCronBundle' => 'Nicoren\Cron\Doctrine']
+                    ['NicorenCronBundle' => 'Nicoren\CronBundle\Doctrine']
                 )
             );
         }
@@ -46,7 +46,7 @@ class NicorenCronBundle extends Bundle
                     $mappings,
                     ['nicoren_cron.model_manager_name'],
                     'nicoren_cron.backend_type_mongodb',
-                    ['NicorenCronBundle' => 'Nicoren\Cron\Doctrine']
+                    ['NicorenCronBundle' => 'Nicoren\CronBundle\Doctrine']
                 )
             );
         }

@@ -76,7 +76,7 @@ class JobManager implements JobManagerInterface
      * 
      * @return JobInterface[]
      */
-    public function findBy(array $criteria): JobInterface
+    public function findOneBy(array $criteria): ?JobInterface
     {
         return $this->getRepository()->findOneBy($criteria);
     }

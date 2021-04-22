@@ -13,12 +13,8 @@ namespace Nicoren\CronBundle\Tests\Unit\Validator\Constraints;
 
 use Nicoren\CronBundle\Exception\CronException;
 use Nicoren\CronBundle\Validator\Constraints\CronSchedule;
-use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Nicoren\CronBundle\Validator\Constraints\CronScheduleValidator;
-use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
-use Twig\Loader\LoaderInterface;
 
 class CronScheduleValidatorTest extends ConstraintValidatorTestCase
 {

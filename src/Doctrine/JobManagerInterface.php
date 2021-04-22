@@ -34,7 +34,7 @@ interface JobManagerInterface
      * 
      * @return JobInterface[]
      */
-    public function findBy(array $criteria): JobInterface;
+    public function findOneBy(array $criteria): ?JobInterface;
 
     /**
      * Return all jobs
