@@ -1,8 +1,8 @@
 <?php
 /*
  * Created on Mon Apr 12 2021
- * @author : Nicolas RENAULT <nrenault@tangkoko.com>
- * @copyright (c) 2021 Tangkoko
+ * @author : Nicolas RENAULT <nicoren44@gmail.com>
+ * @copyright (c) 2021
  */
 
 /**
@@ -17,11 +17,13 @@
 namespace Nicoren\CronBundle\Command;
 
 use Exception;
+use Nicoren\CronBundle\Crontab\JobProcess;
 use Nicoren\CronBundle\Crontab\RunnerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * @author Dries De Peuter <dries@nousefreak.be>
@@ -65,6 +67,7 @@ class RunCronCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $io = new SymfonyStyle($input, $output);
         try {
             $this->crontabRunner->run();
 
@@ -73,12 +76,15 @@ class RunCronCommand extends Command
                  * Wait all tasks are finished
                  */
             }
-
-            if ($this->crontabRunner->isSuccessfull()) {
-                $output->writeln("<info>Jobs Executed successfully.</info>");
-            } else {
-                $output->writeln("<error>Some jobs are not successfull</error>");
+            $io->title("Jobs result :");
+            $cells = [];
+            foreach ($this->crontabRunner->getProcesses() as $jobProcess) {
+                /**
+                 * @var JobProcess $jobProcess
+                 */
+                $cells[] = [$jobProcess->getJob()->getId(), $jobProcess->getJob()->getName(), $jobProcess->getStatus()];
             }
+            $io->table(['Job Id', 'Job name', 'status'], $cells);
             return Command::SUCCESS;
         } catch (Exception $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");

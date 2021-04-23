@@ -1,8 +1,8 @@
 <?php
 /*
  * Created on Mon Apr 19 2021
- * @author : Nicolas RENAULT <nrenault@tangkoko.com>
- * @copyright (c) 2021 Tangkoko
+ * @author : Nicolas RENAULT <nicoren44@gmail.com>
+ * @copyright (c) 2021
  */
 
 namespace Nicoren\CronBundle\DependencyInjection\Compiler;
