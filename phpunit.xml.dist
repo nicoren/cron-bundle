@@ -3,11 +3,11 @@
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="CronTab Test Suite">
-            <directory>src/Tests</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
     <php>
-        <server name="KERNEL_DIR" value="./src/Tests/Fixtures/App/app" />
-        <env name="KERNEL_CLASS" value="Nicoren\CronBundle\Tests\Fixtures\App\app\AppKernel" />
+        <server name="KERNEL_DIR" value="./tests/Fixtures/App/App" />
+        <env name="KERNEL_CLASS" value="Nicoren\CronBundle\Tests\Fixtures\App\App\AppKernel" />
     </php>
 </phpunit>

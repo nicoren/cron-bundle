@@ -9,22 +9,17 @@
 
 namespace Nicoren\CronBundle\DependencyInjection;
 
-use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle;
 use Nicoren\CronBundle\Doctrine\Drivers;
 use Nicoren\CronBundle\Model\Job;
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This class contains the configuration information for the bundle.
- *
- * This information is solely responsible for how the different configuration
- * sections are normalized, and merged.
- *
- * @author David Buchmann
+ * Created on Sat Apr 24 2021
+ * @author : Nicolas RENAULT <nicoren44@gmail.com>
+ * @copyright (c) 2021
  */
+
 class Configuration implements ConfigurationInterface
 {
     /**

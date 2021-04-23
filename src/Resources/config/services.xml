@@ -7,8 +7,22 @@
     <services>
         <defaults autowire="true" autoconfigure="true"/>
         <!-- JOb Manager service -->
-        <service id="Nicoren\Cron\Doctrine\JobManager"/>
-        <service id="Nicoren\Cron\Doctrine\JobManagerInterface" alias="Nicoren\Cron\Doctrine\JobManager"/>
-        
+        <service id="nicoren_cron.job_manager.default" class="Nicoren\CronBundle\Doctrine\JobManager">
+            <argument type="service" id="nicoren_cron.object_manager" />
+            <argument>%nicoren_cron.model.job.class%</argument>
+        </service>
+        <service id="Nicoren\CronBundle\Doctrine\JobManagerInterface" alias="nicoren_cron.job_manager.default" public="false"/>
+
+        <!-- Crontab runner service-->
+        <service id="nicoren_cron.crontab_runner.default" class="Nicoren\CronBundle\Crontab\Runner">
+        </service>
+        <service id="Nicoren\CronBundle\Crontab\RunnerInterface" alias="nicoren_cron.crontab_runner.default" public="false"/>
+
+        <!-- Crontab Scheduler -->
+        <service id="nicoren_cron.crontab_scheduler.default" class="Nicoren\CronBundle\Crontab\Scheduler">
+        </service>
+        <service id="Nicoren\CronBundle\Crontab\SchedulerInterface" alias="nicoren_cron.crontab_scheduler.default" public="false"/>
+
+        <service id="Nicoren\CronBundle\Validator\Constraints\CronScheduleValidator" public="true"/>
     </services>
 </container>

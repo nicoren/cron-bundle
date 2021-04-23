@@ -19,8 +19,6 @@ class Job implements JobInterface
      */
     private $id = null;
 
-
-
     /**
      * @var string|null
      */
@@ -52,6 +50,12 @@ class Job implements JobInterface
      * @var boolean
      */
     private ?\DateTime $createdAt = null;
+
+
+    /**
+     * @var boolean
+     */
+    private ?int $maxConcurrent = null;
 
     /**
      * Get id
@@ -178,7 +182,7 @@ class Job implements JobInterface
     /**
      * Get enabled
      *
-     * @return Job
+     * @return \DateTime
      */
     public function getCreatedAt(): ?\DateTime
     {
@@ -191,9 +195,31 @@ class Job implements JobInterface
      * @param  string $schedule
      * @return Job
      */
-    public function setCreatedAt(\DateTime $createdAt): Job
+    public function setCreatedAt(): Job
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
+        return $this;
+    }
+
+    /**
+     * Get max concurrent
+     *
+     * @return int
+     */
+    public function getMaxConcurrent(): ?int
+    {
+        return $this->maxConcurrent;
+    }
+
+    /**
+     * Set max concurrent
+     *
+     * @param  string $schedule
+     * @return Job
+     */
+    public function setMaxConcurrent(int $maxConcurrent): Job
+    {
+        $this->maxConcurrent = $maxConcurrent;
         return $this;
     }
 }

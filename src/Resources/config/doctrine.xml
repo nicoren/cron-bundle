@@ -5,15 +5,12 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="nicoren_cron.job_manager.default" class="Nicoren\CronBundle\Doctrine\JobManager" public="false">
-            <argument type="service" id="nicoren_cron.object_manager" />
-            <argument>%nicoren_cron.model.job.class%</argument>
-        </service>
-
+        <defaults autowire="true" autoconfigure="true"/>
         <!-- The factory is configured in the DI extension class to support more Symfony versions -->
         <service id="nicoren_cron.object_manager" class="Doctrine\Common\Persistence\ObjectManager" public="false">
-            <argument>%nicoren_cron.model_manager_name%</argument>
+            <factory service="nicoren_cron.doctrine.objectmanager_provider"
+                    method="getObjectManager"
+                />
         </service>
     </services>
-
 </container>

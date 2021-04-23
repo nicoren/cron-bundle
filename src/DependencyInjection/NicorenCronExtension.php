@@ -52,25 +52,20 @@ class NicorenCronExtension extends Extension
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load("services.xml");
+        foreach (['services', 'listeners', 'commands'] as $basename) {
+            $loader->load(sprintf('%s.xml', $basename));
+        }
+
+
         if (isset(self::$doctrineDrivers[$config['db_driver']])) {
             $loader->load('doctrine.xml');
-            $container->setAlias('nicoren_cron.doctrine_registry', new Alias(self::$doctrineDrivers[$config['db_driver']]['registry'], false));
+            $loader->load(sprintf('doctrine-%s.xml', $config['db_driver']));
         } else {
             $loader->load(sprintf('%s.xml', $config['db_driver']));
         }
         $container->setParameter($this->getAlias() . '.backend_type_' . $config['db_driver'], true);
 
-        if (isset(self::$doctrineDrivers[$config['db_driver']])) {
-            $definition = $container->getDefinition('nicoren_cron.object_manager');
-            $definition->setFactory([new Reference('nicoren_cron.doctrine_registry'), 'getManager']);
-        }
-
-        foreach (['listeners', 'commands'] as $basename) {
-            $loader->load(sprintf('%s.xml', $basename));
-        }
         $container->setAlias('nicoren_cron.job_manager', new Alias($config['service']['job_manager'], true));
-
         $this->remapParametersNamespaces($config, $container, [
             '' => [
                 'db_driver' => 'nicoren_cron.storage',

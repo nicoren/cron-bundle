@@ -10,6 +10,7 @@ namespace Nicoren\CronBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
+use Nicoren\CronBundle\DependencyInjection\Compiler\ValidationPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -18,6 +19,7 @@ class NicorenCronBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
+        $container->addCompilerPass(new ValidationPass());
         $this->addRegisterMappingsPass($container);
     }
 
@@ -28,11 +30,25 @@ class NicorenCronBundle extends Bundle
         ];
 
         if (class_exists('Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')) {
-            $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings, ['nicoren_cron.model_manager_name'], 'nicoren_cron.backend_type_orm'));
+            $container->addCompilerPass(
+                DoctrineOrmMappingsPass::createXmlMappingDriver(
+                    $mappings,
+                    ['nicoren_cron.model_manager_name'],
+                    'nicoren_cron.backend_type_orm',
+                    ['NicorenCronBundle' => 'Nicoren\CronBundle\Doctrine']
+                )
+            );
         }
 
         if (class_exists('Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass')) {
-            $container->addCompilerPass(DoctrineMongoDBMappingsPass::createXmlMappingDriver($mappings, ['nicoren_cron.model_manager_name'], 'nicoren_cron.backend_type_mongodb'));
+            $container->addCompilerPass(
+                DoctrineMongoDBMappingsPass::createXmlMappingDriver(
+                    $mappings,
+                    ['nicoren_cron.model_manager_name'],
+                    'nicoren_cron.backend_type_mongodb',
+                    ['NicorenCronBundle' => 'Nicoren\CronBundle\Doctrine']
+                )
+            );
         }
     }
 }

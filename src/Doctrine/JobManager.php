@@ -2,16 +2,17 @@
 
 /**
  * Created on Tue Apr 13 2021
- * @author : Nicolas RENAULT <nrenault@tangkoko.com>
- * @copyright (c) 2021 Tangkoko
+ * @author : Nicolas RENAULT <nicoren44@gmail.com>
+ * @copyright (c) 2021
  */
 
-namespace FOS\UserBundle\Doctrine;
+namespace Nicoren\CronBundle\Doctrine;
 
 
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Nicoren\CronBundle\Model\JobInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class JobManager implements JobManagerInterface
 {
@@ -26,14 +27,21 @@ class JobManager implements JobManagerInterface
     private $class;
 
     /**
+     *
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    /**
      * Constructor.
      *
      * @param string $class
      */
-    public function __construct(ObjectManager $om, $class)
+    public function __construct(ObjectManager $om, $class, ValidatorInterface $validator)
     {
         $this->objectManager = $om;
         $this->class = $class;
+        $this->validator = $validator;
     }
 
     /**
@@ -68,7 +76,7 @@ class JobManager implements JobManagerInterface
      * 
      * @return JobInterface[]
      */
-    public function findBy(array $criteria): JobInterface
+    public function findOneBy(array $criteria): ?JobInterface
     {
         return $this->getRepository()->findOneBy($criteria);
     }
@@ -98,8 +106,9 @@ class JobManager implements JobManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save(JobInterface $job, $andFlush = true)
+    public function save(JobInterface $job, $andFlush = true): void
     {
+        $this->validator->validate($job);
         $this->objectManager->persist($job);
         if ($andFlush) {
             $this->objectManager->flush();

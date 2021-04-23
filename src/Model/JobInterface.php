@@ -31,7 +31,7 @@ interface JobInterface
      * @param  string $name
      * @return Job
      */
-    public function setName(string $name): Job;
+    public function setName(string $name): JobInterface;
 
     /**
      * Get command
@@ -46,7 +46,7 @@ interface JobInterface
      * @param  string $name
      * @return Job
      */
-    public function setCommand(string $command): Job;
+    public function setCommand(string $command): JobInterface;
 
     /**
      * Get description
@@ -61,7 +61,7 @@ interface JobInterface
      * @param  string $name
      * @return Job
      */
-    public function setDescription(string $description): Job;
+    public function setDescription(string $description): JobInterface;
 
 
     /**
@@ -76,7 +76,7 @@ interface JobInterface
      * @param  string $schedule
      * @return Job
      */
-    public function setSchedule(string $schedule): Job;
+    public function setSchedule(string $schedule): JobInterface;
 
     /**
      * Get enabled
@@ -91,5 +91,35 @@ interface JobInterface
      * @param  string $schedule
      * @return Job
      */
-    public function setEnabled(bool $enabled): Job;
+    public function setEnabled(bool $enabled): JobInterface;
+
+    /**
+     * Get enabled
+     *
+     * @return Job
+     */
+    public function getCreatedAt(): ?\DateTime;
+
+    /**
+     * Set schedule
+     *
+     * @param  string $schedule
+     * @return Job
+     */
+    public function setCreatedAt(): JobInterface;
+
+    /**
+     * Get max concurrent
+     *
+     * @return int
+     */
+    public function getMaxConcurrent(): ?int;
+
+    /**
+     * Set max concurrent
+     *
+     * @param  string $schedule
+     * @return Job
+     */
+    public function setMaxConcurrent(int $maxConcurrent): JobInterface;
 }

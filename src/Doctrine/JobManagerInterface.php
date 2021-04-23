@@ -2,15 +2,13 @@
 
 /**
  * Created on Tue Apr 13 2021
- * @author : Nicolas RENAULT <nrenault@tangkoko.com>
- * @copyright (c) 2021 Tangkoko
+ * @author : Nicolas RENAULT <nicoren44@gmail.com>
+ * @copyright (c) 2021
  */
 
-namespace FOS\UserBundle\Doctrine;
+namespace Nicoren\CronBundle\Doctrine;
 
 
-use Doctrine\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectRepository;
 use Nicoren\CronBundle\Model\JobInterface;
 
 interface JobManagerInterface
@@ -36,7 +34,7 @@ interface JobManagerInterface
      * 
      * @return JobInterface[]
      */
-    public function findBy(array $criteria): JobInterface;
+    public function findOneBy(array $criteria): ?JobInterface;
 
     /**
      * Return all jobs
@@ -53,5 +51,5 @@ interface JobManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save(JobInterface $job, $andFlush = true);
+    public function save(JobInterface $job, $andFlush = true): void;
 }
