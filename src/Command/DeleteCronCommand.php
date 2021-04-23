@@ -10,16 +10,18 @@ namespace Nicoren\CronBundle\Command;
 use Exception;
 use Nicoren\CronBundle\Doctrine\JobManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * @author Dries De Peuter <dries@nousefreak.be>
  */
-class ListCronCommand extends Command
+class DeleteCronCommand extends Command
 {
 
+    const OPTION_ID = "id";
 
 
     /**
@@ -42,8 +44,9 @@ class ListCronCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('cron:job:list')
-            ->setDescription('List cron jobs');
+        $this->setName('cron:job:delete')
+            ->setDescription('Delete a cron job')
+            ->addArgument(static::OPTION_ID, null, InputArgument::REQUIRED, 'The job id');
     }
 
     /**
@@ -51,15 +54,15 @@ class ListCronCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new SymfonyStyle($input, $output);
         try {
-            $jobs = $this->jobManager->find();
-            $io->title("Jobs List :");
-            $cells = [];
-            foreach ($jobs as  $job) {
-                $cells[] = [$job->getId(), $job->getName(), $job->getDescription(), $job->getCommand(), $job->getSchedule(), $job->getEnabled() ? "Enabled" : "Disabled", $job->getMaxConcurrent()];
+            $job = $this->jobManager->findOneBy(["_id" => $input->getArgument(static::OPTION_ID)]);
+            if ($job) {
+                $this->jobManager->delete($job);
+                $output->writeln("<info>Job deleted.</info>");
+            } else {
+                $message = sprintf("Job with id %s don't exist", $input->getArgument(static::OPTION_ID));
+                $output->writeln("<error>$message</error>");
             }
-            $io->table(['Id', 'Name', 'Description', "Command", "Schedule", "Status", "Max concurrent"], $cells);
             return Command::SUCCESS;
         } catch (Exception $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
