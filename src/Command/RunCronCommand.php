@@ -67,7 +67,18 @@ class RunCronCommand extends Command
     {
         try {
             $this->crontabRunner->run();
-            $output->writeln("<info>Jobs Executed successfully.</info>");
+
+            while ($this->crontabRunner->isRunning()) {
+                /**
+                 * Wait all tasks are finished
+                 */
+            }
+
+            if ($this->crontabRunner->isSuccessfull()) {
+                $output->writeln("<info>Jobs Executed successfully.</info>");
+            } else {
+                $output->writeln("<error>Some jobs are not successfull</error>");
+            }
             return Command::SUCCESS;
         } catch (Exception $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
