@@ -15,4 +15,19 @@ interface RunnerInterface
      * @return void
      */
     public function run(): void;
+
+    /**
+     * Test if subprocess are running
+     *
+     * @return bool
+     */
+    public function isRunning(): bool;
+
+
+    /**
+     * Return true if all processes are successfull
+     *
+     * @return boolean
+     */
+    public function isSuccessfull(): bool;
 }
