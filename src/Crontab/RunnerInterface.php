@@ -1,11 +1,13 @@
 <?php
 /*
  * Created on Thu Apr 22 2021
- * @author : Nicolas RENAULT <nrenault@tangkoko.com>
- * @copyright (c) 2021 Tangkoko
+ * @author : Nicolas RENAULT <nicoren44@gmail.com>
+ * @copyright (c) 2021
  */
 
 namespace Nicoren\CronBundle\Crontab;
+
+use Doctrine\Common\Collections\ArrayCollection;
 
 interface RunnerInterface
 {
@@ -25,9 +27,9 @@ interface RunnerInterface
 
 
     /**
-     * Return true if all processes are successfull
+     * Return processes
      *
-     * @return boolean
+     * @return ArrayCollection
      */
-    public function isSuccessfull(): bool;
+    public function getProcesses(): ArrayCollection;
 }
