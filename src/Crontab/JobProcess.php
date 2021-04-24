@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Created on Mon Apr 12 2021
+ * @author : Nicolas RENAULT <nicoren44@gmail.com>
+ * @copyright (c) 2021
+ */
+
 namespace Nicoren\CronBundle\Crontab;
 
 use Nicoren\CronBundle\Model\JobInterface;

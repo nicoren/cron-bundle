@@ -1,9 +1,11 @@
 <?php
-/*
+
+/**
  * Created on Mon Apr 12 2021
  * @author : Nicolas RENAULT <nicoren44@gmail.com>
  * @copyright (c) 2021
  */
+
 
 namespace Nicoren\CronBundle\Command;
 
@@ -12,12 +14,10 @@ use Nicoren\CronBundle\Doctrine\JobManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @author Dries De Peuter <dries@nousefreak.be>
- */
-class DeleteCronCommand extends Command
+class EnableCronCommand extends Command
 {
 
     const OPTION_ID = "id";
@@ -43,8 +43,8 @@ class DeleteCronCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('cron:job:delete')
-            ->setDescription('Delete a cron job')
+        $this->setName('cron:job:enable')
+            ->setDescription('Enable a cron job')
             ->addArgument(static::OPTION_ID, null, InputArgument::REQUIRED, 'The job id');
     }
 
@@ -56,8 +56,9 @@ class DeleteCronCommand extends Command
         try {
             $job = $this->jobManager->findOneBy(["id" => $input->getArgument(static::OPTION_ID)]);
             if ($job) {
-                $this->jobManager->delete($job);
-                $output->writeln("<info>Job deleted.</info>");
+                $job->setEnabled(true);
+                $this->jobManager->save($job);
+                $output->writeln("<info>Job enabled.</info>");
             } else {
                 $message = sprintf("Job with id %s don't exist", $input->getArgument(static::OPTION_ID));
                 $output->writeln("<error>$message</error>");

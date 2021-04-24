@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
+<!--
+ Created on Mon Apr 12 2021
+ @author : Nicolas RENAULT <nicoren44@gmail.com>
+ @license MIT
+ -->
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:doctrine_mongodb="http://symfony.com/schema/dic/doctrine/odm/mongodb"

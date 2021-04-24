@@ -1,9 +1,11 @@
 <?php
-/*
+
+/**
  * Created on Mon Apr 12 2021
  * @author : Nicolas RENAULT <nicoren44@gmail.com>
  * @copyright (c) 2021
  */
+
 
 
 namespace Nicoren\CronBundle\Command;
@@ -16,9 +18,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-/**
- * @author Dries De Peuter <dries@nousefreak.be>
- */
 class RunCronCommand extends Command
 {
 
