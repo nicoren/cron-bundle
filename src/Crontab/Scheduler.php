@@ -12,8 +12,22 @@ use Nicoren\CronBundle\Exception\CronException;
 
 class Scheduler implements SchedulerInterface
 {
-    private const PATTERN_DEFAULT = '#\s+#';
 
+    protected const PATTERN_DEFAULT = '#\s+#';
+
+    /**
+     * @var DateTimeFactoryInterface
+     */
+    protected DateTimeFactoryInterface $dateTimeFactory;
+
+    /**
+     *
+     * @param DateTimeFactoryInterface $datetimeFactory
+     */
+    public function __construct(DateTimeFactoryInterface $datetimeFactory)
+    {
+        $this->dateTimeFactory = $datetimeFactory;
+    }
 
     /**
      * {@inheritdoc}
@@ -40,7 +54,7 @@ class Scheduler implements SchedulerInterface
             throw new CronException(sprintf('Invalid cron expression: %s', implode(" ", $exprArr)));
         }
         $match = true;
-        $currentTime = new \DateTime();
+        $currentTime = $this->dateTimeFactory->createDateTime();
         $time = [
             $currentTime->format('i') + $currentTime->format('H') * 60,
             $currentTime->format('H'),

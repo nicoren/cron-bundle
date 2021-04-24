@@ -51,10 +51,14 @@ bin/console doctrine:migrations:migrate
 doctrine:mongodb:schema:update
 ```
 
-4. Start using the bundle:
-```shell
-bin/console cron:list
-bin/console cron:run
+4. Configuration Overview:
+edit or create file config/packages/nicoren_cron.yaml
+```yaml
+# config/packages/nicoren_cron.yaml
+nicoren_cron:
+    db_driver: mongodb # other valid values are 'mongodb' and 'couchdb'
+    job_class: Nicoren\CronBundle\Model\Job
+    timezone: "Europe/Paris"
 ```
 
 5. To run your cron jobs automatically, add the following line to your (or whomever's) crontab:
