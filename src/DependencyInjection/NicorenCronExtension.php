@@ -71,6 +71,7 @@ class NicorenCronExtension extends Extension
                 'db_driver' => 'nicoren_cron.storage',
                 'model_manager_name' => 'nicoren_cron.model_manager_name',
                 'job_class' => 'nicoren_cron.model.job.class',
+                'timezone' => 'nicoren_cron.timezone'
             ],
         ]);
     }
