@@ -44,6 +44,7 @@ class Configuration implements ConfigurationInterface
             ->cannotBeEmpty()
             ->end()
             ->scalarNode('job_class')->isRequired()->defaultValue(Job::class)->end()
+            ->scalarNode('timezone')->isRequired()->defaultValue(\DateTimeZone::UTC)->end()
             ->scalarNode('model_manager_name')->defaultNull()->end();
         $rootNode
             ->addDefaultsIfNotSet()
@@ -56,7 +57,6 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->end()
             ->end();
-
         return $treeBuilder;
     }
 }

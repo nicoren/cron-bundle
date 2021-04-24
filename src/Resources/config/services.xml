@@ -26,7 +26,11 @@
         <service id="nicoren_cron.crontab_scheduler.default" class="Nicoren\CronBundle\Crontab\Scheduler">
         </service>
         <service id="Nicoren\CronBundle\Crontab\SchedulerInterface" alias="nicoren_cron.crontab_scheduler.default" public="false"/>
-
         <service id="Nicoren\CronBundle\Validator\Constraints\CronScheduleValidator" public="true"/>
+
+        <service id="nicoren_cron.crontab_datetime_factory.default" class="Nicoren\CronBundle\Crontab\DateTimeFactory">
+            <argument>%nicoren_cron.timezone%</argument>
+        </service>
+        <service id="Nicoren\CronBundle\Crontab\DateTimeFactoryInterface" alias="nicoren_cron.crontab_datetime_factory.default"/>
     </services>
 </container>
