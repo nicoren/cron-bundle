@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
+<!--
+ Created on Mon Apr 12 2021
+ @author : Nicolas RENAULT <nicoren44@gmail.com>
+ @license MIT
+ -->
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
@@ -17,6 +21,12 @@
         </service>
         <service id="nicoren_cron.command.delete_cron" class="Nicoren\CronBundle\Command\DeleteCronCommand">
             <tag name="console.command" command="cron:job:delete" />
+        </service>
+        <service id="nicoren_cron.command.enable_cron" class="Nicoren\CronBundle\Command\EnableCronCommand">
+            <tag name="console.command" command="cron:job:enable" />
+        </service>
+        <service id="nicoren_cron.command.disable_cron" class="Nicoren\CronBundle\Command\DisableCronCommand">
+            <tag name="console.command" command="cron:job:disable" />
         </service>
     </services>
 </container>
