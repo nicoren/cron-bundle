@@ -1,5 +1,6 @@
 <?php
-/*
+
+/**
  * Created on Mon Apr 12 2021
  * @author : Nicolas RENAULT <nicoren44@gmail.com>
  * @copyright (c) 2021
@@ -14,9 +15,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @author Dries De Peuter <dries@nousefreak.be>
- */
 class CreateCronCommand extends Command
 {
 

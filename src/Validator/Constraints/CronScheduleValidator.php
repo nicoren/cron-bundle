@@ -1,12 +1,9 @@
 <?php
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+/**
+ * Created on Sat Apr 17 2021
+ * @author : Nicolas RENAULT <nicoren44@gmail.com>
+ * @copyright (c) 2021
  */
 
 namespace Nicoren\CronBundle\Validator\Constraints;
