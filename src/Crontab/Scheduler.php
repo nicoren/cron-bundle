@@ -63,7 +63,7 @@ class Scheduler implements SchedulerInterface
             $currentTime->format('w')
         ];
         for ($i = 0; $i < count($exprArr); $i++) {
-            $match = $match && $this->matchCronExpression($exprArr[$i], $time[$i]);
+            $match = $match && $this->matchCronExpression($exprArr[$i], $time[$i], $i);
         }
         return $match;
     }
@@ -97,7 +97,7 @@ class Scheduler implements SchedulerInterface
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    protected function matchCronExpression($expr, int $num): bool
+    protected function matchCronExpression($expr, int $num, $i): bool
     {
         // handle ALL match
         if ($expr === '*') {
@@ -107,7 +107,7 @@ class Scheduler implements SchedulerInterface
         // handle multiple options
         if (strpos($expr, ',') !== false) {
             foreach (explode(',', $expr) as $e) {
-                if ($this->matchCronExpression($e, $num)) {
+                if ($this->matchCronExpression($e, $num, $i)) {
                     return true;
                 }
             }
@@ -125,7 +125,9 @@ class Scheduler implements SchedulerInterface
             }
             $expr = $e[0];
             $mod = $e[1];
-            $num = $num % 60;
+            if ($i == 0 && $num % $mod == 0) {
+                return true;
+            }
         } else {
             $mod = 1;
         }
