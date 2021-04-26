@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 class EnableCronCommand extends Command
 {
@@ -68,5 +69,26 @@ class EnableCronCommand extends Command
             $output->writeln("<error>{$e->getMessage()}</error>");
         }
         return Command::FAILURE;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        foreach ($this->getDefinition()->getArguments() as $argument) {
+            if (!$input->getArgument($argument->getName()) && $argument->isRequired()) {
+                $question = new Question("Please fill a(n) {$argument->getName()} :");
+                $question->setValidator(function ($value) {
+                    if (empty($value)) {
+                        throw new \Exception("This field can not be empty");
+                    }
+                    return $value;
+                });
+                $answer = $this->getHelper('question')->ask($input, $output, $question);
+
+                $input->setArgument($argument->getName(), $answer);
+            }
+        }
     }
 }

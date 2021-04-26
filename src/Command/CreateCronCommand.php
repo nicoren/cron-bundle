@@ -14,6 +14,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 class CreateCronCommand extends Command
 {
@@ -76,5 +77,27 @@ class CreateCronCommand extends Command
             $output->writeln("<error>{$e->getMessage()}</error>");
         }
         return Command::FAILURE;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        foreach ($this->getDefinition()->getOptions() as $option) {
+
+            if (!$input->getOption($option->getName()) && $option->isValueRequired()) {
+                $question = new Question("Please fill a {$option->getName()} :");
+                $question->setValidator(function ($value) {
+                    if (empty($value)) {
+                        throw new \Exception("This field can not be empty");
+                    }
+                    return $value;
+                });
+                $answer = $this->getHelper('question')->ask($input, $output, $question);
+
+                $input->setOption($option->getName(), $answer);
+            }
+        }
     }
 }
