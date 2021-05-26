@@ -21,7 +21,6 @@
         <indexes>
             <index unique="false">
                 <key name="name" order="desc"/>
-                <option name="safe" value="true" />
             </index>
         </indexes>
         <lifecycle-callbacks>
