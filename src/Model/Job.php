@@ -17,45 +17,45 @@ class Job implements JobInterface
      *
      * @var string|int|null
      */
-    private $id = null;
+    protected $id = null;
 
     /**
      * @var string|null
      */
-    private ?string $name;
+    protected ?string $name;
 
     /**
      * @var string|null
      */
-    private ?string $schedule = null;
+    protected ?string $schedule = null;
 
     /**
      * @var string|null
      */
-    private ?string $command;
+    protected ?string $command;
 
 
     /**
      * @var string|null
      */
-    private ?string $description;
+    protected ?string $description;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    private bool $enabled = false;
-
-
-    /**
-     * @var boolean
-     */
-    private ?\DateTime $createdAt = null;
+    protected bool $enabled = false;
 
 
     /**
-     * @var boolean
+     * @var bool
      */
-    private ?int $maxConcurrent = null;
+    protected ?\DateTime $createdAt = null;
+
+
+    /**
+     * @var bool
+     */
+    protected ?int $maxConcurrent = null;
 
     /**
      * Get id
