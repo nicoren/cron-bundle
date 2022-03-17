@@ -12,6 +12,8 @@ namespace Nicoren\CronBundle\Crontab;
 use Doctrine\Common\Collections\ArrayCollection;
 use Nicoren\CronBundle\Doctrine\JobManagerInterface;
 use Nicoren\CronBundle\Model\JobInterface;
+use Nicoren\CronBundle\Storage\Adapter\AdapterInterface;
+use Nicoren\CronBundle\Storage\Adapter\PoolInterface;
 use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Process\Process;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -38,9 +40,9 @@ class Runner implements RunnerInterface
 
     /**
      *
-     * @var CacheInterface
+     * @var AdapterInterface
      */
-    protected $cache;
+    protected $adapter;
 
     /**
      *
@@ -49,13 +51,13 @@ class Runner implements RunnerInterface
     public function __construct(
         JobManagerInterface $jobManager,
         SchedulerInterface $scheduler,
-        CacheInterface $cache
+        AdapterInterface $adapter
 
     ) {
         $this->jobManager = $jobManager;
         $this->processes = new ArrayCollection();
         $this->scheduler = $scheduler;
-        $this->cache = $cache;
+        $this->adapter = $adapter;
     }
 
     /**
@@ -66,7 +68,7 @@ class Runner implements RunnerInterface
      */
     protected function canRunProcess(JobInterface $job): bool
     {
-        $processes = $this->getCacheItem()->get();
+        $processes = $this->adapter->get();
         //job not already start
         if (!isset($processes[$job->getId()])) {
             return true;
@@ -90,20 +92,6 @@ class Runner implements RunnerInterface
         return false;
     }
 
-    /**
-     * Return cached running process
-     *
-     * @return CacheItem
-     */
-    protected function getCacheItem(): CacheItem
-    {
-        /**
-         * @var CacheItem
-         */
-        $cacheItem = $this->cache->getItem(static::CACHE_KEY);
-
-        return $cacheItem;
-    }
 
     /**
      * Return true if job can be runned
@@ -113,8 +101,7 @@ class Runner implements RunnerInterface
      */
     protected function cacheProcess(JobInterface $job, Process $process): void
     {
-        $cacheItem = $this->getCacheItem();
-        $runningProcesses = $cacheItem->get();
+        $runningProcesses = $this->adapter->get();
         if (!$runningProcesses) {
             $runningProcesses = [];
         }
@@ -123,8 +110,7 @@ class Runner implements RunnerInterface
             $runningProcesses[$job->getId()] = [];
         }
         $runningProcesses[$job->getId()][] = $process->getPid();
-        $cacheItem->set($runningProcesses);
-        $this->cache->save($cacheItem);
+        $this->adapter->set($runningProcesses);
     }
 
     /**
@@ -135,14 +121,12 @@ class Runner implements RunnerInterface
      */
     protected function uncacheProcess(JobInterface $job, int $pid): void
     {
-        $cacheItem = $this->getCacheItem();
-        $runningProcesses = $cacheItem->get();
+        $runningProcesses = $this->adapter->get();
         if (isset($runningProcesses[$job->getId()])) {
             if (($key = array_search($pid, $runningProcesses[$job->getId()])) !== false) {
                 unset($runningProcesses[$job->getId()][$key]);
             }
-            $cacheItem->set($runningProcesses);
-            $this->cache->save($cacheItem);
+            $this->adapter->set($runningProcesses);
         }
     }
 

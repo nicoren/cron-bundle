@@ -14,7 +14,7 @@
         <field name="command" column="command" type="string" length="255" />
         <field name="description" column="description" type="text" nullable="true" />
         <field name="schedule" column="schedule" type="string" length="20" />
-        <field name="enabled" column="enabled" type="boolean" nullable="false">
+        <field name="enabled" column="enabled" type="bool" nullable="false">
             <options>
                 <option name="default">false</option>
             </options>

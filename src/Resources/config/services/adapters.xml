@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<!--
+ Created on Mon Apr 12 2021
+ @author : Nicolas RENAULT <nicoren44@gmail.com>
+ @license MIT
+ -->
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults autowire="true" autoconfigure="true"/>
+        <!-- Pool Adapter -->
+        <service id="nicoren_cron.storage.adapter.pool" class="Nicoren\CronBundle\Storage\Adapter\Pool">
+            <argument type="collection">
+            </argument>
+        </service>
+        <service id="Nicoren\CronBundle\Storage\Adapter\PoolInterface" alias="nicoren_cron.storage.adapter.pool" public="false"/>
+
+        <!-- Adapters -->
+        <service id="nicoren_cron.storage.adapter.filesystem" class="Nicoren\CronBundle\Storage\Adapter\Filesystem">
+            <argument>%kernel.project_dir%/var/cron/pids</argument>
+            <tag name="nicoren_cron.storage_adapter" alias="filesystem"/>
+        </service>
+    </services>
+</container>
+

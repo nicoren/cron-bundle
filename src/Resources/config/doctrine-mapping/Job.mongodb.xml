@@ -15,9 +15,9 @@
         <field field-name="command" name="command" type="string" />
         <field field-name="description" name="description" type="string" />
         <field field-name="schedule" name="schedule" type="string" />
-        <field field-name="enabled" name="enabled" type="boolean" />
+        <field field-name="enabled" name="enabled" type="bool" />
         <field field-name="createdAt" name="created_t" type="date"  />
-        <field field-name="maxConcurrent" name="max_concurrent" type="integer"  />
+        <field field-name="maxConcurrent" name="max_concurrent" type="int"  />
         <indexes>
             <index unique="false">
                 <key name="name" order="desc"/>
