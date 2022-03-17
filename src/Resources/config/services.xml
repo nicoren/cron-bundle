@@ -7,7 +7,9 @@
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
+     <imports>
+        <import resource="services/*.xml" />
+    </imports>
     <services>
         <defaults autowire="true" autoconfigure="true"/>
         <!-- JOb Manager service -->
@@ -19,6 +21,7 @@
 
         <!-- Crontab runner service-->
         <service id="nicoren_cron.crontab_runner.default" class="Nicoren\CronBundle\Crontab\Runner">
+            <argument key="$adapter" type="service" id="nicoren_cron.storage.adapter"></argument>
         </service>
         <service id="Nicoren\CronBundle\Crontab\RunnerInterface" alias="nicoren_cron.crontab_runner.default" public="false"/>
 

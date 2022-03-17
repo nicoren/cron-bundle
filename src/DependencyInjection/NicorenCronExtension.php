@@ -19,6 +19,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -27,7 +28,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class NicorenCronExtension extends Extension
 {
-
     /**
      * @var array
      */
@@ -71,9 +71,11 @@ class NicorenCronExtension extends Extension
                 'db_driver' => 'nicoren_cron.storage',
                 'model_manager_name' => 'nicoren_cron.model_manager_name',
                 'job_class' => 'nicoren_cron.model.job.class',
-                'timezone' => 'nicoren_cron.timezone'
+                'timezone' => 'nicoren_cron.timezone',
             ],
         ]);
+
+        $container->setParameter('nicoren_cron.storage.adapter_code', $config['storage']['adapter']);
     }
 
     protected function remapParameters(array $config, ContainerBuilder $container, array $map)

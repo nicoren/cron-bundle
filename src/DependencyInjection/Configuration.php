@@ -45,7 +45,25 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->scalarNode('job_class')->isRequired()->defaultValue(Job::class)->end()
             ->scalarNode('timezone')->isRequired()->defaultValue(\DateTimeZone::UTC)->end()
-            ->scalarNode('model_manager_name')->defaultNull()->end();
+            ->scalarNode('model_manager_name')->defaultNull()->end()
+            ->arrayNode('storage')
+              ->info('Adapter configuration to store running pids')
+              ->addDefaultsIfNotSet()
+              ->children()
+            	->scalarNode('adapter')
+                  ->info('Cron storage configuration')
+                  ->defaultValue('nicoren_cron.storage.adapter.filesystem')
+                ->end()
+                ->arrayNode('redis')
+                ->info('Cron redis options')
+                  ->children()
+                    ->scalarNode('type')->isRequired()->end()
+                    ->scalarNode('dns')->isRequired()->end()
+                  ->end()
+                ->end()
+              ->end()
+            ->end();
+            	
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
