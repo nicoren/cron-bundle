@@ -142,6 +142,8 @@ class Runner implements RunnerInterface
             if ($this->scheduler->match($job->getSchedule())) {
                 if ($this->canRunProcess($job)) {
                     $process = Process::fromShellCommandline($job->getCommand());
+                    $process->setTimeout(86400);
+                    $process->setIdleTimeout(86400);
                     $process->start();
                     $jobProcess = new JobProcess($job, $process);
                     $this->processes->add($jobProcess);
@@ -161,13 +163,14 @@ class Runner implements RunnerInterface
      */
     public function isRunning(): bool
     {
-        $nbProcessTerminated = 0;
+
         $i = 0;
         while ($i < $this->processes->count()) {
+            $nbProcessTerminated = 0;
             if (!$this->processes->get($i)->getProcess() || !$this->processes->get($i)->getProcess()->isRunning()) {
                 $nbProcessTerminated++;
                 if ($process = $this->processes->get($i)->getProcess()) {
-                    $this->uncacheProcess($this->processes->get($i)->getJob(), $this->processes->get($i)->getPid());
+                    $this->uncacheProcess($process->getJob(), $process->getPid());
                 }
             }
             $i++;
@@ -181,3 +184,4 @@ class Runner implements RunnerInterface
         return $this->processes;
     }
 }
+
