@@ -13,20 +13,17 @@ namespace Nicoren\CronBundle\Command;
 use Exception;
 use Nicoren\CronBundle\Crontab\JobProcess;
 use Nicoren\CronBundle\Crontab\RunnerInterface;
+use Nicoren\CronBundle\Doctrine\JobManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class RunCronCommand extends Command
+class RunJobCommand extends Command
 {
 
-    const OPTION_NAME = "name";
-    const OPTION_DESCRIPTION = "description";
-    const OPTION_COMMAND = "command";
-    const OPTION_SCHEDULE = "schedule";
-    const OPTION_ENABLED = "enabled";
-    const OPTION_MAX_CONCURRENT = "max_concurrent";
+    const OPTION_ID = "id";
 
 
     /**
@@ -35,13 +32,22 @@ class RunCronCommand extends Command
      */
     protected $crontabRunner;
 
+    /**
+     *
+     * @var JobManagerInterface
+     */
+    protected $jobManager;
+
+
 
     public function __construct(
-        RunnerInterface $crontabRunner
+        RunnerInterface $crontabRunner,
+        JobManagerInterface $jobManager
 
     ) {
         parent::__construct();
         $this->crontabRunner = $crontabRunner;
+        $this->jobManager = $jobManager;
     }
 
     /**
@@ -49,7 +55,9 @@ class RunCronCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('cron:run');
+        $this->setName('cron:job:run')
+            ->setDescription('Run a cron job')
+            ->addArgument(static::OPTION_ID, null, InputArgument::REQUIRED, 'The job id');;
     }
 
     /**
@@ -59,7 +67,8 @@ class RunCronCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         try {
-            $this->crontabRunner->run();
+            $job = $this->jobManager->findOneBy(["id" => $input->getArgument(static::OPTION_ID)]);
+            $this->crontabRunner->run($job);
 
             while ($this->crontabRunner->isRunning()) {
                 /**
@@ -77,6 +86,7 @@ class RunCronCommand extends Command
             $io->table(['Pid', 'Job Id', 'Job name', 'status'], $cells);
             return Command::SUCCESS;
         } catch (Exception $e) {
+            echo ($e->getTraceAsString());
             $output->writeln("<error>{$e->getMessage()}</error>");
         }
         return Command::FAILURE;

@@ -58,7 +58,14 @@ class Configuration implements ConfigurationInterface
                 ->info('Cron redis options')
                   ->children()
                     ->scalarNode('type')->isRequired()->end()
-                    ->scalarNode('dns')->isRequired()->end()
+                    ->scalarNode('dsn')->isRequired()->end()
+                    ->arrayNode('parameters')
+                        ->canBeUnset()
+                        ->children()
+                            ->scalarNode('database')->defaultNull()->end()
+                            ->scalarNode('password')->defaultNull()->end()
+                        ->end()
+                    ->end()
                   ->end()
                 ->end()
               ->end()
@@ -67,14 +74,15 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
-            ->arrayNode('service')
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->scalarNode('job_manager')->defaultValue('nicoren_cron.job_manager.default')->end()
+              ->arrayNode('service')
+              ->addDefaultsIfNotSet()
+              ->children()
+                ->scalarNode('job_manager')->defaultValue('nicoren_cron.job_manager.default')->end()
+                ->end()
+              ->end()
             ->end()
-            ->end()
-            ->end()
-            ->end();
+          ->end();
         return $treeBuilder;
     }
 }
+

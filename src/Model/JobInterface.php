@@ -36,7 +36,7 @@ interface JobInterface
     /**
      * Get command
      *
-     * @return Job
+     * @return ?string
      */
     public function getCommand(): ?string;
 
@@ -67,7 +67,7 @@ interface JobInterface
     /**
      * Get schedule
      *
-     * @return Job
+     * @return ?string
      */
     public function getSchedule(): ?string;
     /**

@@ -22,6 +22,18 @@
             <argument>%kernel.project_dir%/var/cron/pids</argument>
             <tag name="nicoren_cron.storage_adapter" alias="filesystem"/>
         </service>
+        <service id="nicoren_cron.storage.adapter.redis" class="Nicoren\CronBundle\Storage\Adapter\Redis">
+            <tag name="nicoren_cron.storage_adapter" alias="redis"/>
+        </service>
+
+        <service id="nicoren_cron.redis.adapter.phpredis" class="Nicoren\CronBundle\Storage\Adapter\Redis\PhpRedis" lazy="true">
+            <factory class="Nicoren\CronBundle\Storage\Adapter\Redis\PhpRedisFactory" method="create">
+                
+            </factory>
+                <argument type="service" id="nicoren_cron.adapter.redis.configuration"></argument>
+                <argument>nicoren_cron_pids</argument>
+            <tag name="nicoren_cron.redis_adapter" alias="PhpRedis"/>
+        </service>
     </services>
 </container>
 

@@ -10,6 +10,7 @@
 namespace Nicoren\CronBundle\Crontab;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Nicoren\CronBundle\Model\JobInterface;
 
 interface RunnerInterface
 {
@@ -18,7 +19,7 @@ interface RunnerInterface
      *
      * @return void
      */
-    public function run(): void;
+    public function run(?JobInterface $job = null): void;
 
     /**
      * Test if subprocess are running

@@ -135,9 +135,13 @@ class Runner implements RunnerInterface
      *
      * @return void
      */
-    public function run(): void
+    public function run(?JobInterface $job = null): void
     {
-        $jobs = $this->jobManager->find(["enabled" => true]);
+        if ($job) {
+            $jobs = [$job];
+        } else {
+            $jobs = $this->jobManager->find(["enabled" => true]);
+        }
         foreach ($jobs as $job) {
             if ($this->scheduler->match($job->getSchedule())) {
                 if ($this->canRunProcess($job)) {
@@ -163,14 +167,19 @@ class Runner implements RunnerInterface
      */
     public function isRunning(): bool
     {
-
+        $nbProcessTerminated = 0;
         $i = 0;
         while ($i < $this->processes->count()) {
-            $nbProcessTerminated = 0;
+
             if (!$this->processes->get($i)->getProcess() || !$this->processes->get($i)->getProcess()->isRunning()) {
                 $nbProcessTerminated++;
-                if ($process = $this->processes->get($i)->getProcess()) {
-                    $this->uncacheProcess($process->getJob(), $process->getPid());
+                /**
+                 * @var JobProcess $process
+                 */
+                if ($process = $this->processes->get($i)) {
+                    if ($process->getPid()) {
+                        $this->uncacheProcess($process->getJob(), $process->getPid());
+                    }
                 }
             }
             $i++;
@@ -184,4 +193,3 @@ class Runner implements RunnerInterface
         return $this->processes;
     }
 }
-

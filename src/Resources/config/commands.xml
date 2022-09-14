@@ -16,6 +16,9 @@
         <service id="nicoren_cron.command.run_cron" class="Nicoren\CronBundle\Command\RunCronCommand">
             <tag name="console.command" command="cron:run" />
         </service>
+        <service id="nicoren_cron.command.run_job" class="Nicoren\CronBundle\Command\RunJobCommand">
+            <tag name="console.command" command="cron:job:run" />
+        </service>
         <service id="nicoren_cron.command.list_cron" class="Nicoren\CronBundle\Command\ListCronCommand">
             <tag name="console.command" command="cron:job:list" />
         </service>

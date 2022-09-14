@@ -10,6 +10,8 @@ namespace Nicoren\CronBundle\DependencyInjection;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
+use Nicoren\CronBundle\DependencyInjection\Configuration\RedisConfiguration;
+use Nicoren\CronBundle\DependencyInjection\Configuration\RedisDsnParser;
 use Nicoren\CronBundle\Doctrine\Drivers;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -76,6 +78,17 @@ class NicorenCronExtension extends Extension
         ]);
 
         $container->setParameter('nicoren_cron.storage.adapter_code', $config['storage']['adapter']);
+        if ($config['storage']['adapter'] == "redis" && isset($config['storage']["redis"]) && isset($config['storage']["redis"]["type"])) {
+            $container->setParameter("nicoren_cron.redis.client_code", $config['storage']["redis"]["type"]);
+            $dsn = $config['storage']["redis"]["dsn"];
+            $a = [];
+            $container->resolveEnvPlaceholders($dsn, null, $a);
+            $redisConfig = new RedisConfiguration($dsn, count($a) > 0);
+            if (isset($config['storage']["redis"]["parameters"]) && isset($config['storage']["redis"]["parameters"]["database"])) {
+                $redisConfig->setDatabase($config['storage']["redis"]["parameters"]["database"]);
+            }
+            $container->setDefinition("nicoren_cron.adapter.redis.configuration", new Definition(RedisConfiguration::class, [$dsn, count($a) > 0]));
+        }
     }
 
     protected function remapParameters(array $config, ContainerBuilder $container, array $map)

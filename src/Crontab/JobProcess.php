@@ -95,7 +95,7 @@ class JobProcess
      *
      * @return int
      */
-    public function getPid(): int
+    public function getPid(): ?int
     {
         return $this->pid;
     }
