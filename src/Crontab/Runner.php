@@ -139,11 +139,12 @@ class Runner implements RunnerInterface
     {
         if ($job) {
             $jobs = [$job];
+            $force = true;
         } else {
             $jobs = $this->jobManager->find(["enabled" => true]);
         }
         foreach ($jobs as $job) {
-            if ($this->scheduler->match($job->getSchedule())) {
+            if ($this->scheduler->match($job->getSchedule()) || $force) {
                 if ($this->canRunProcess($job)) {
                     $process = Process::fromShellCommandline($job->getCommand());
                     $process->setTimeout(86400);
@@ -193,3 +194,4 @@ class Runner implements RunnerInterface
         return $this->processes;
     }
 }
+
