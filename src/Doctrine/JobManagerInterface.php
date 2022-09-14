@@ -41,7 +41,7 @@ interface JobManagerInterface
      * 
      * @return JobInterface[]
      */
-    public function find(): array;
+    public function find(?array $criteria = null, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array;
 
     /**
      * {@inheritdoc}

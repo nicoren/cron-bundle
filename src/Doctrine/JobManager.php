@@ -82,12 +82,15 @@ class JobManager implements JobManagerInterface
     }
 
     /**
-     * Return all jobs
+     * Return jobs
      * 
      * @return JobInterface[]
      */
-    public function find(): array
+    public function find(?array $criteria = null, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array
     {
+        if (!empty($criteria)) {
+            return $this->getRepository()->findBy($criteria, $orderBy, $limit, $offset);
+        }
         return $this->getRepository()->findAll();
     }
 
