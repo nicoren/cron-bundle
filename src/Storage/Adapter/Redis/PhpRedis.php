@@ -12,15 +12,15 @@ use Nicoren\CronBundle\Storage\Adapter\AdapterInterface;
 
 class PhpRedis implements AdapterInterface
 {
-    private string $key;
+    private string $prefix;
 
     private \Redis $client;
 
     public function __construct(
-        string $key,
+        string $prefix,
         \Redis $client
     ) {
-        $this->key = $key;
+        $this->prefix = $prefix;
         $this->client = $client;
     }
 
@@ -28,9 +28,9 @@ class PhpRedis implements AdapterInterface
      *
      * @return array
      */
-    public function get(): array
+    public function get(string $pid): array
     {
-        return json_decode($this->client->get($this->key), true) ?? [];
+        return json_decode($this->client->get($this->prefix . $pid), true) ?? [];
     }
 
     /**
@@ -38,9 +38,10 @@ class PhpRedis implements AdapterInterface
      * @param array $value
      * @return AdapterInterface
      */
-    public function set(array $value): AdapterInterface
+    public function set(string $pid, array $value): AdapterInterface
     {
-        $this->client->set($this->key, json_encode($value));
+        $this->client->set($this->prefix . $pid, json_encode($value));
+        $this->client->save();
         return $this;
     }
 }

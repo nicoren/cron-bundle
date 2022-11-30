@@ -11,7 +11,16 @@ namespace Nicoren\CronBundle\Storage\Adapter;
 
 interface AdapterInterface
 {
-    public function get(): array;
+    /**
+     *
+     * @return array
+     */
+    public function get(string $pid): array;
 
-    public function set(array $value): self;
+    /**
+     *
+     * @param array $value
+     * @return AdapterInterface
+     */
+    public function set(string $pid, array $value): AdapterInterface;
 }

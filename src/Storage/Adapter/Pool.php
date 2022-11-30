@@ -19,7 +19,6 @@ class Pool implements PoolInterface
 
     public function __construct(?array $adapters = [])
     {
-        var_dump($this->adapters);
         $this->adapters = $adapters;
     }
 

@@ -21,14 +21,23 @@ class Redis implements AdapterInterface
         $this->redisClient = $redisClient;
     }
 
-    public function get(): array
+    /**
+     *
+     * @return array
+     */
+    public function get(string $pid): array
     {
-        return $this->redisClient->get();
+        return $this->redisClient->get($pid);
     }
 
-    public function set(array $value): self
+    /**
+     *
+     * @param array $value
+     * @return AdapterInterface
+     */
+    public function set(string $pid, array $value): AdapterInterface
     {
-        $this->redisClient->set($value);
+        $this->redisClient->set($pid, $value);
         return $this;
     }
 }

@@ -12,7 +12,7 @@ use Nicoren\CronBundle\DependencyInjection\Configuration\RedisConfiguration;
 
 class PhpRedisFactory
 {
-    public static function create(RedisConfiguration $redisConfiguration, string $key)
+    public static function create(RedisConfiguration $redisConfiguration, string $prefix)
     {
         $client = new \Redis();
         $auth = null;
@@ -22,6 +22,6 @@ class PhpRedisFactory
         }
         $client->connect($redisConfiguration->getHost(), $redisConfiguration->getPort(), 0, NULL, 0, 0, $options);
         $client->select($redisConfiguration->getDatabase());
-        return new PhpRedis($key, $client);
+        return new PhpRedis($prefix, $client);
     }
 }

@@ -68,18 +68,18 @@ class Runner implements RunnerInterface
      */
     protected function canRunProcess(JobInterface $job): bool
     {
-        $processes = $this->adapter->get();
+        $processes = $this->adapter->get($job->getId());
+
         //job not already start
-        if (!isset($processes[$job->getId()])) {
+        if (empty($processes)) {
             return true;
         }
 
         //job already launched
-        if (isset($processes[$job->getId()])) {
+        if (!empty($processes)) {
             $runningProcesses = [];
-            foreach ($processes[$job->getId()] as $pid) {
-
-                if (posix_kill($pid, 0)) {
+            foreach ($processes as $pid) {
+                if (posix_kill($pid, 0) === true) {
                     $runningProcesses[] = $pid;
                 } else {
                     $this->uncacheProcess($job, $pid);
@@ -101,16 +101,10 @@ class Runner implements RunnerInterface
      */
     protected function cacheProcess(JobInterface $job, Process $process): void
     {
-        $runningProcesses = $this->adapter->get();
-        if (!$runningProcesses) {
-            $runningProcesses = [];
-        }
+        $runningProcesses = $this->adapter->get($job->getId());
 
-        if (!isset($runningProcesses[$job->getId()])) {
-            $runningProcesses[$job->getId()] = [];
-        }
-        $runningProcesses[$job->getId()][] = $process->getPid();
-        $this->adapter->set($runningProcesses);
+        $runningProcesses[] = $process->getPid();
+        $this->adapter->set($job->getId(), $runningProcesses);
     }
 
     /**
@@ -121,12 +115,13 @@ class Runner implements RunnerInterface
      */
     protected function uncacheProcess(JobInterface $job, int $pid): void
     {
-        $runningProcesses = $this->adapter->get();
-        if (isset($runningProcesses[$job->getId()])) {
-            if (($key = array_search($pid, $runningProcesses[$job->getId()])) !== false) {
-                unset($runningProcesses[$job->getId()][$key]);
+        $runningProcesses = $this->adapter->get($job->getId());
+        if (!empty($runningProcesses)) {
+            $key = array_search($pid, $runningProcesses);
+            if ($key !== false) {
+                unset($runningProcesses[$key]);
+                $this->adapter->set($job->getId(), array_values($runningProcesses));
             }
-            $this->adapter->set($runningProcesses);
         }
     }
 
@@ -137,9 +132,9 @@ class Runner implements RunnerInterface
      */
     public function run(?JobInterface $job = null): void
     {
+        $force = !is_null($job);
         if ($job) {
             $jobs = [$job];
-            $force = true;
         } else {
             $jobs = $this->jobManager->find(["enabled" => true]);
         }
@@ -194,4 +189,3 @@ class Runner implements RunnerInterface
         return $this->processes;
     }
 }
-

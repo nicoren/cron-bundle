@@ -31,9 +31,8 @@
                 
             </factory>
                 <argument type="service" id="nicoren_cron.adapter.redis.configuration"></argument>
-                <argument>nicoren_cron_pids</argument>
+                <argument>nicoren_cron_pids_</argument>
             <tag name="nicoren_cron.redis_adapter" alias="PhpRedis"/>
         </service>
     </services>
 </container>
-

@@ -28,7 +28,21 @@ class Filesystem implements AdapterInterface
         $this->client = new FilesystemClient();
     }
 
-    public function get(): array
+    public function get(string $pid): array
+    {
+        $ids = $this->getIds();
+        return isset($ids[$pid]) ? $ids[$pid] : [];
+    }
+
+    public function set(string $pid, array $value): self
+    {
+        $values = $this->getIds();
+        $value[$pid] = $value;
+        $this->client->dumpFile($this->file, json_encode($values));
+        return $this;
+    }
+
+    private function getIds(): array
     {
         $ids = [];
         if ($this->client->exists($this->file)) {
@@ -36,11 +50,5 @@ class Filesystem implements AdapterInterface
             $ids = json_decode($fileInfo->getContents(), true);
         }
         return $ids;
-    }
-
-    public function set(array $value): self
-    {
-        $this->client->dumpFile($this->file, json_encode($value));
-        return $this;
     }
 }
