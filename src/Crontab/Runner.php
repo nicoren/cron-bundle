@@ -68,7 +68,7 @@ class Runner implements RunnerInterface
      */
     protected function canRunProcess(JobInterface $job): bool
     {
-        $processes = $this->adapter->get($job->getId());
+        $processes = array_filter($this->adapter->get($job->getId()));
 
         //job not already start
         if (empty($processes)) {
