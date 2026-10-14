@@ -22,7 +22,7 @@ class Job implements JobInterface
     /**
      * @var string|null
      */
-    protected ?string $name;
+    protected ?string $name = null;
 
     /**
      * @var string|null
@@ -32,13 +32,13 @@ class Job implements JobInterface
     /**
      * @var string|null
      */
-    protected ?string $command;
+    protected ?string $command = null;
 
 
     /**
      * @var string|null
      */
-    protected ?string $description;
+    protected ?string $description = null;
 
     /**
      * @var bool

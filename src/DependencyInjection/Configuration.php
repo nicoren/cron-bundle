@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return TreeBuilder
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $supportedDrivers = Drivers::getDrivers();
         $treeBuilder = new TreeBuilder('nicoren_cron');
@@ -43,8 +43,8 @@ class Configuration implements ConfigurationInterface
             ->isRequired()
             ->cannotBeEmpty()
             ->end()
-            ->scalarNode('job_class')->isRequired()->defaultValue(Job::class)->end()
-            ->scalarNode('timezone')->isRequired()->defaultValue(\DateTimeZone::UTC)->end()
+            ->scalarNode('job_class')->defaultValue(Job::class)->end()
+            ->scalarNode('timezone')->defaultValue('UTC')->end()
             ->scalarNode('model_manager_name')->defaultNull()->end()
             ->arrayNode('storage')
               ->info('Adapter configuration to store running pids')
@@ -52,7 +52,7 @@ class Configuration implements ConfigurationInterface
               ->children()
             	->scalarNode('adapter')
                   ->info('Cron storage configuration')
-                  ->defaultValue('nicoren_cron.storage.adapter.filesystem')
+                  ->defaultValue('filesystem')
                 ->end()
                 ->arrayNode('redis')
                 ->info('Cron redis options')

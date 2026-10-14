@@ -11,9 +11,11 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Nicoren\CronBundle\Doctrine\JobManager;
 use Nicoren\CronBundle\Model\Job;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+#[AllowMockObjectsWithoutExpectations]
 class JobManagerTest extends KernelTestCase
 {
 
@@ -40,7 +42,6 @@ class JobManagerTest extends KernelTestCase
     public function setUp(): void
     {
         static::bootKernel();
-        $om = parent::$kernel->getContainer()->get('doctrine_mongodb');
         $this->validator = \Symfony\Component\Validator\Validation::createValidator();
         $this->document = new Job();
         $this->document->setCommand("echo 'aa'")
@@ -57,7 +58,7 @@ class JobManagerTest extends KernelTestCase
             ->expects($this->any())
             ->method('getRepository')
             ->with($this->equalTo(Job::class))
-            ->will($this->returnValue($this->objectRepository));
+            ->willReturn($this->objectRepository);
     }
 
 
@@ -95,7 +96,7 @@ class JobManagerTest extends KernelTestCase
             ->expects($this->once())
             ->method('findOneBy')
             ->with($this->equalTo(["id" => 123]))
-            ->will($this->returnValue($this->document));
+            ->willReturn($this->document);
         $this->jobManager->findOneBy(["id" => 123]);
     }
 
@@ -111,7 +112,7 @@ class JobManagerTest extends KernelTestCase
         $repository
             ->expects($this->any())
             ->method('findAll')
-            ->will($this->returnValue([$this->document]));
+            ->willReturn([$this->document]);
         $this->jobManager->find();
         $this->assertTrue(true);
     }
@@ -119,7 +120,7 @@ class JobManagerTest extends KernelTestCase
     /**
      * {@inheritdoc}
      */
-    public function testSave()
+    public function testSave(): void
     {
         $this->validator->validate($this->document);
         $this->objectManager

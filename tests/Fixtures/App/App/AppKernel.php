@@ -27,13 +27,13 @@ class AppKernel extends Kernel
         return $array;
     }
 
-    public function getRootDir()
+    public function getProjectDir(): string
     {
         return __DIR__;
     }
 
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load(__DIR__ . '/config/services/base.yml');
     }
@@ -41,7 +41,7 @@ class AppKernel extends Kernel
     /**
      * @return string
      */
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return sys_get_temp_dir() . '/NicorenCronBundle/cache';
     }
@@ -49,17 +49,13 @@ class AppKernel extends Kernel
     /**
      * @return string
      */
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return sys_get_temp_dir() . '/NicorenCronBundle/logs';
     }
 
-    protected function build(ContainerBuilder $container)
+    protected function build(ContainerBuilder $container): void
     {
         $container->register('logger', NullLogger::class);
-
-        if (!$container->hasParameter('kernel.root_dir')) {
-            $container->setParameter('kernel.root_dir', $this->getRootDir());
-        }
     }
 }

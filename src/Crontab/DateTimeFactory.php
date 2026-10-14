@@ -31,6 +31,6 @@ class DateTimeFactory implements DateTimeFactoryInterface
      */
     public function createDateTime(?string $date = null): \DateTime
     {
-        return  new \DateTime($date, $this->timezone);
+        return new \DateTime($date ?? 'now', $this->timezone);
     }
 }

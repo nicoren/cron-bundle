@@ -53,17 +53,17 @@ class RunJobCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('cron:job:run')
             ->setDescription('Run a cron job')
-            ->addArgument(static::OPTION_ID, null, InputArgument::REQUIRED, 'The job id');;
+            ->addArgument(static::OPTION_ID, InputArgument::REQUIRED, 'The job id');
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         try {

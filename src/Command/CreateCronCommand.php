@@ -45,7 +45,7 @@ class CreateCronCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('cron:job:create')
             ->setDescription('Create a cron job')
@@ -60,16 +60,16 @@ class CreateCronCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $job = $this->jobManager->createEmpty();
             $job->setName($input->getOption(static::OPTION_NAME))
                 ->setDescription($input->getOption(static::OPTION_DESCRIPTION))
                 ->setCommand($input->getOption(static::OPTION_COMMAND))
-                ->setEnabled($input->getOption(static::OPTION_ENABLED))
+                ->setEnabled(filter_var($input->getOption(static::OPTION_ENABLED), FILTER_VALIDATE_BOOLEAN))
                 ->setSchedule($input->getOption(static::OPTION_SCHEDULE))
-                ->setMaxConcurrent($input->getOption(static::OPTION_MAX_CONCURRENT));
+                ->setMaxConcurrent((int) $input->getOption(static::OPTION_MAX_CONCURRENT));
             $this->jobManager->save($job);
             $output->writeln("<info>Job saved.</info>");
             return Command::SUCCESS;
@@ -82,7 +82,7 @@ class CreateCronCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         foreach ($this->getDefinition()->getOptions() as $option) {
 

@@ -95,7 +95,7 @@ class RedisConfiguration
     {
         $this->parseDsn($this->dsn);
         $this->password = $password;
-        return $this->password;
+        return $this;
     }
 
 

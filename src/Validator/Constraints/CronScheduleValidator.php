@@ -33,7 +33,7 @@ class CronScheduleValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         $this->scheduler->match($value);
     }

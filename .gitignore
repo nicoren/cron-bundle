@@ -2,3 +2,5 @@ vendor/
 composer.lock
 .phpunit.result.cache
 var
+tests/Fixtures/App/App/config/reference.php
+.phpunit.cache

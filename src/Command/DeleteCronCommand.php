@@ -41,7 +41,7 @@ class DeleteCronCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('cron:job:delete')
             ->setDescription('Delete a cron job')
@@ -51,7 +51,7 @@ class DeleteCronCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $job = $this->jobManager->findOneBy(["id" => $input->getArgument(static::OPTION_ID)]);
@@ -72,7 +72,7 @@ class DeleteCronCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         foreach ($this->getDefinition()->getArguments() as $argument) {
             if (!$input->getArgument($argument->getName()) && $argument->isRequired()) {

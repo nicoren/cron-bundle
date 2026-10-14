@@ -9,20 +9,26 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="Nicoren\CronBundle\Model\Job">
+    <entity name="Nicoren\CronBundle\Model\Job" table="jobs">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
         <field name="name" column="name" type="string" length="255" />
         <field name="command" column="command" type="string" length="255" />
         <field name="description" column="description" type="text" nullable="true" />
-        <field name="schedule" column="schedule" type="string" length="20" />
-        <field name="enabled" column="enabled" type="bool" nullable="false">
+        <field name="schedule" column="schedule" type="string" length="255" />
+        <field name="enabled" column="enabled" type="boolean" nullable="false">
             <options>
-                <option name="default">false</option>
+                <option name="default">0</option>
             </options>
         </field>
-        <field name="createdAt" column="createdAt" type="datetime" nullable="false" >
-            <options>
-                <option name="default">CURRENT_TIMESTAMP</option>
-            </options>
-        </field>
+        <field name="createdAt" column="created_at" type="datetime" nullable="true" />
+        <field name="maxConcurrent" column="max_concurrent" type="integer" nullable="true" />
+        <indexes>
+            <index name="jobs_name_idx" columns="name" />
+        </indexes>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAt" />
+        </lifecycle-callbacks>
     </entity>
 </doctrine-mapping>

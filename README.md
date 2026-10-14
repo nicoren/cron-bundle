@@ -32,7 +32,7 @@ public function registerBundles()
 {
     $bundles = [
         // ...
-        new Nicoren\CronBundle\CronCronBundle(),
+        new Nicoren\CronBundle\NicorenCronBundle(),
     ];
 
     // ...
@@ -110,7 +110,12 @@ bin/console cron:run
 Requirements
 ------------
 
-PHP 7.3 or above
+- PHP 8.2 or above
+- Symfony 7.4 or 8
+- `doctrine/mongodb-odm-bundle` (`db_driver: mongodb`) or `doctrine/doctrine-bundle` (`db_driver: orm`)
+- `ext-redis` to store the running pids in redis
+
+Use the 1.x versions for Symfony 4.4 / 5. See the [changelog](CHANGELOG.md) to upgrade.
 
 Author and contributors
 -----------------------

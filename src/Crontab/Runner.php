@@ -14,9 +14,7 @@ use Nicoren\CronBundle\Doctrine\JobManagerInterface;
 use Nicoren\CronBundle\Model\JobInterface;
 use Nicoren\CronBundle\Storage\Adapter\AdapterInterface;
 use Nicoren\CronBundle\Storage\Adapter\PoolInterface;
-use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Process\Process;
-use Symfony\Contracts\Cache\CacheInterface;
 
 class Runner implements RunnerInterface
 {

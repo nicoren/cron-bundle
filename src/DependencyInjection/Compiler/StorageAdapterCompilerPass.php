@@ -8,7 +8,6 @@
 
 namespace Nicoren\CronBundle\DependencyInjection\Compiler;
 
-use Nicoren\CronBundle\DependencyInjection\Configuration\RedisDsnParser;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -16,7 +15,7 @@ use Symfony\Component\DependencyInjection\Alias;
 
 class StorageAdapterCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $pool = $container->getDefinition('nicoren_cron.storage.adapter.pool');
 
@@ -32,7 +31,7 @@ class StorageAdapterCompilerPass implements CompilerPassInterface
 
         foreach ($container->findTaggedServiceIds('nicoren_cron.redis_adapter') as $id => $tags) {
             $adapters[$tags[0]["alias"]] = new Reference($id);
-            if ($container->getParameter('nicoren_cron.redis.client_code') == $tags[0]["alias"]) {
+            if ($container->hasParameter('nicoren_cron.redis.client_code') && $container->getParameter('nicoren_cron.redis.client_code') == $tags[0]["alias"]) {
                 $container->setAlias('nicoren_cron.redis.adapter', new Alias($id, false));
             }
         }
@@ -40,7 +39,7 @@ class StorageAdapterCompilerPass implements CompilerPassInterface
         $pool->setArgument(0, $adapters);
 
         $redisDef = $container->getDefinition('nicoren_cron.storage.adapter.redis');
-        if ($redisDef) {
+        if ($redisDef && $storageAdapterId) {
             $tags = $redisDef->getTags();
             if (isset($tags["nicoren_cron.storage_adapter"]) && isset($tags["nicoren_cron.storage_adapter"][0]) && isset($tags["nicoren_cron.storage_adapter"][0]["alias"])) {
                 $redisAlias = $tags["nicoren_cron.storage_adapter"][0]["alias"];

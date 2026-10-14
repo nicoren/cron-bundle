@@ -37,7 +37,7 @@ class Filesystem implements AdapterInterface
     public function set(string $pid, array $value): self
     {
         $values = $this->getIds();
-        $value[$pid] = $value;
+        $values[$pid] = $value;
         $this->client->dumpFile($this->file, json_encode($values));
         return $this;
     }
@@ -47,7 +47,7 @@ class Filesystem implements AdapterInterface
         $ids = [];
         if ($this->client->exists($this->file)) {
             $fileInfo = new SplFileInfo($this->file, '', '');
-            $ids = json_decode($fileInfo->getContents(), true);
+            $ids = json_decode($fileInfo->getContents(), true) ?? [];
         }
         return $ids;
     }

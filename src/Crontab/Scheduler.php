@@ -78,7 +78,7 @@ class Scheduler implements SchedulerInterface
      */
     protected function explodeCronExpr($expr): array
     {
-        $e = preg_split(static::PATTERN_DEFAULT, $expr, null, PREG_SPLIT_NO_EMPTY);
+        $e = preg_split(static::PATTERN_DEFAULT, $expr, -1, PREG_SPLIT_NO_EMPTY);
         if (sizeof($e) < 5 || sizeof($e) > 6) {
             throw new CronException(sprintf('Invalid cron expression: %s', $expr));
         }

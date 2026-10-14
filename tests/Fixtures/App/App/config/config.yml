@@ -1,11 +1,10 @@
 framework:
     secret: testSecret
-    csrf_protection: true
-    session: ~
-    default_locale: en
-    translator: { fallback: en }
-    profiler: { only_exceptions: false }
-    
+    test: true
+    http_method_override: false
+    handle_all_throwables: true
+    php_errors:
+        log: true
     validation:
         email_validation_mode: html5
 
@@ -18,12 +17,11 @@ doctrine:
                 memory:   true
 
 nicoren_cron:
-    db_driver: mongodb # other valid values are 'mongodb' and 'couchdb'
+    db_driver: mongodb # other valid values are 'mongodb' and 'orm'
     job_class: Nicoren\CronBundle\Model\Job
+    timezone: UTC
 
 doctrine_mongodb:
-    auto_generate_proxy_classes: true
-    auto_generate_hydrator_classes: true
     connections:
         default:
             server: 'mongodb://localhost:27017'

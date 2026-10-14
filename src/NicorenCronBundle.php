@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class NicorenCronBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
         $container->addCompilerPass(new ValidationPass())
@@ -25,30 +25,28 @@ class NicorenCronBundle extends Bundle
         $this->addRegisterMappingsPass($container);
     }
 
-    private function addRegisterMappingsPass(ContainerBuilder $container)
+    private function addRegisterMappingsPass(ContainerBuilder $container): void
     {
         $mappings = [
             realpath(__DIR__ . '/Resources/config/doctrine-mapping') => 'Nicoren\CronBundle\Model',
         ];
 
-        if (class_exists('Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')) {
+        if (class_exists(DoctrineOrmMappingsPass::class)) {
             $container->addCompilerPass(
                 DoctrineOrmMappingsPass::createXmlMappingDriver(
                     $mappings,
                     ['nicoren_cron.model_manager_name'],
-                    'nicoren_cron.backend_type_orm',
-                    ['NicorenCronBundle' => 'Nicoren\CronBundle\Doctrine']
+                    'nicoren_cron.backend_type_orm'
                 )
             );
         }
 
-        if (class_exists('Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass')) {
+        if (class_exists(DoctrineMongoDBMappingsPass::class)) {
             $container->addCompilerPass(
                 DoctrineMongoDBMappingsPass::createXmlMappingDriver(
                     $mappings,
                     ['nicoren_cron.model_manager_name'],
-                    'nicoren_cron.backend_type_mongodb',
-                    ['NicorenCronBundle' => 'Nicoren\CronBundle\Doctrine']
+                    'nicoren_cron.backend_type_mongodb'
                 )
             );
         }

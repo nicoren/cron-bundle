@@ -8,13 +8,19 @@
 
 namespace Nicoren\CronBundle\Validator\Constraints;
 
+use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
- */
+#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD)]
 class CronSchedule extends Constraint
 {
-    public $message = 'This value has not crontab schedule format.';
+    public string $message = 'This value has not crontab schedule format.';
+
+    #[HasNamedArguments]
+    public function __construct(?string $message = null, ?array $groups = null, mixed $payload = null)
+    {
+        parent::__construct(null, $groups, $payload);
+
+        $this->message = $message ?? $this->message;
+    }
 }

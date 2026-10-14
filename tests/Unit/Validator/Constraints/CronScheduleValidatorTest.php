@@ -11,6 +11,7 @@
 
 namespace Nicoren\CronBundle\Tests\Unit\Validator\Constraints;
 
+use Nicoren\CronBundle\Crontab\DateTimeFactory;
 use Nicoren\CronBundle\Crontab\Scheduler;
 use Nicoren\CronBundle\Crontab\SchedulerInterface;
 use Nicoren\CronBundle\Exception\CronException;
@@ -29,12 +30,8 @@ class CronScheduleValidatorTest extends ConstraintValidatorTestCase
     public function testCorrectSchedule()
     {
 
-        $value = $this->validator->validate('*/20 * * * *', new CronSchedule(["message" => 'Invalid crontab expression.']));
-        $this->assertEquals(
-            null,
-            $value,
-            "CronScheduleValidator::validate must return true"
-        );
+        $this->validator->validate('*/20 * * * *', new CronSchedule(message: 'Invalid crontab expression.'));
+        $this->assertNoViolation();
     }
 
     /**
@@ -45,7 +42,7 @@ class CronScheduleValidatorTest extends ConstraintValidatorTestCase
     public function testBadSchedule()
     {
         $this->expectException(CronException::class);
-        $this->validator->validate('0 0 * * * *', new CronSchedule(["message" => 'Invalid crontab expression.']));
+        $this->validator->validate('0 0 * * * *', new CronSchedule(message: 'Invalid crontab expression.'));
     }
 
     /**
@@ -55,16 +52,12 @@ class CronScheduleValidatorTest extends ConstraintValidatorTestCase
      */
     public function testCorrectScheduleWithDayOfWeek()
     {
-        $value = $this->validator->validate('*/5 * * * Sun,Mon,Tue,Wed,Thu,Fri', new CronSchedule(["message" => 'Invalid crontab expression.']));
-        $this->assertEquals(
-            null,
-            $value,
-            "CronScheduleValidator::validate must return true"
-        );
+        $this->validator->validate('*/5 * * * Sun,Mon,Tue,Wed,Thu,Fri', new CronSchedule(message: 'Invalid crontab expression.'));
+        $this->assertNoViolation();
     }
 
-    protected function createValidator()
+    protected function createValidator(): CronScheduleValidator
     {
-        return new CronScheduleValidator(new Scheduler());
+        return new CronScheduleValidator(new Scheduler(new DateTimeFactory('UTC')));
     }
 }

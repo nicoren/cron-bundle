@@ -21,7 +21,7 @@ class PhpRedisFactory
             $options = ['auth' => [$redisConfiguration->getUsername(), $redisConfiguration->getPassword()]];
         }
         $client->connect($redisConfiguration->getHost(), $redisConfiguration->getPort(), 0, NULL, 0, 0, $options);
-        $client->select($redisConfiguration->getDatabase());
+        $client->select((int) $redisConfiguration->getDatabase());
         return new PhpRedis($prefix, $client);
     }
 }
