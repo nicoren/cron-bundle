@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.1
+
+### Fixes
+
+- Scheduler: the minute field was compared with the number of minutes since midnight, so the schedules
+  with a fixed minute only matched at midnight (`0 */2 * * *` ran once a day at 00:00, `30 * * * *` at 00:30,
+  `0 3 * * *` never). Only the schedules with a step dividing 60 on the minute field (`*/5`, `*/20`...)
+  were matched as expected.
+- Scheduler: the steps are counted from the start of the range (`5-59/10` matches 5, 15, 25...,
+  `*/2` on the days of the month matches 1, 3, 5...) and a step of 0 is rejected.
+
 ## 2.0.0
 
 Compatibility with Symfony 7.4 / 8 and PHP 8.2+.

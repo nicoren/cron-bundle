@@ -16,6 +16,11 @@ class Scheduler implements SchedulerInterface
     protected const PATTERN_DEFAULT = '#\s+#';
 
     /**
+     * Bounds of the fields : minute, hour, day of month, month, day of week
+     */
+    protected const FIELD_BOUNDS = [[0, 59], [0, 23], [1, 31], [1, 12], [0, 6]];
+
+    /**
      * @var DateTimeFactoryInterface
      */
     protected DateTimeFactoryInterface $dateTimeFactory;
@@ -56,11 +61,11 @@ class Scheduler implements SchedulerInterface
         $match = true;
         $currentTime = $this->dateTimeFactory->createDateTime();
         $time = [
-            $currentTime->format('i') + $currentTime->format('H') * 60,
-            $currentTime->format('H'),
-            $currentTime->format('d'),
-            $currentTime->format('m'),
-            $currentTime->format('w')
+            (int) $currentTime->format('i'),
+            (int) $currentTime->format('G'),
+            (int) $currentTime->format('j'),
+            (int) $currentTime->format('n'),
+            (int) $currentTime->format('w')
         ];
         for ($i = 0; $i < count($exprArr); $i++) {
             $match = $match && $this->matchCronExpression($exprArr[$i], $time[$i], $i);
@@ -124,9 +129,9 @@ class Scheduler implements SchedulerInterface
                 throw new CronException(sprintf('Invalid cron expression, expecting numeric modulus: %s', $expr));
             }
             $expr = $e[0];
-            $mod = $e[1];
-            if ($i == 0 && $num % $mod == 0) {
-                return true;
+            $mod = (int) $e[1];
+            if ($mod < 1) {
+                throw new CronException(sprintf('Invalid cron expression, the modulus must be greater than 0: %s', $expr));
             }
         } else {
             $mod = 1;
@@ -134,8 +139,7 @@ class Scheduler implements SchedulerInterface
 
         // handle all match by modulus
         if ($expr === '*') {
-            $from = 0;
-            $to = 60;
+            [$from, $to] = static::FIELD_BOUNDS[$i];
         } elseif (strpos($expr, '-') !== false) {
             // handle range
             $e = explode('-', $expr);
@@ -154,7 +158,8 @@ class Scheduler implements SchedulerInterface
         if ($from === false || $to === false) {
             throw new CronException(sprintf('Invalid cron expression: %s', $expr));
         }
-        return $num >= $from && $num <= $to && $num % $mod === 0;
+        // the steps are counted from the start of the range ("5-59/10" : 5, 15, 25...)
+        return $num >= $from && $num <= $to && ($num - $from) % $mod === 0;
     }
 
     /**
