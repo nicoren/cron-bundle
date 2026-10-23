@@ -85,6 +85,7 @@ class NicorenCronExtension extends Extension implements PrependExtensionInterfac
                 'model_manager_name' => 'nicoren_cron.model_manager_name',
                 'job_class' => 'nicoren_cron.model.job.class',
                 'timezone' => 'nicoren_cron.timezone',
+                'process_timeout' => 'nicoren_cron.process_timeout',
             ],
         ]);
 

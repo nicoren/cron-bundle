@@ -17,6 +17,7 @@ class JobProcess
     const STATUS_SUCCESS = "Success";
     const STATUS_ERROR = "Error";
     const STATUS_SKIPPED = "Skipped";
+    const STATUS_TIMEOUT = "Timeout";
 
     /**
      * @var Process
@@ -37,6 +38,11 @@ class JobProcess
      * @var int
      */
     protected ?int $pid = null;
+
+    /**
+     * @var bool
+     */
+    protected bool $timedOut = false;
 
     /**
      *
@@ -83,6 +89,10 @@ class JobProcess
             return static::STATUS_SKIPPED;
         }
 
+        if ($this->timedOut) {
+            return static::STATUS_TIMEOUT;
+        }
+
         if ($this->getProcess()->isSuccessful()) {
             return static::STATUS_SUCCESS;
         }
@@ -98,5 +108,17 @@ class JobProcess
     public function getPid(): ?int
     {
         return $this->pid;
+    }
+
+    /**
+     * Mark the process as killed because its timeout was exceeded
+     *
+     * @param bool $timedOut
+     * @return JobProcess
+     */
+    public function setTimedOut(bool $timedOut): JobProcess
+    {
+        $this->timedOut = $timedOut;
+        return $this;
     }
 }

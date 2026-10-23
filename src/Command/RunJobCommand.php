@@ -74,6 +74,7 @@ class RunJobCommand extends Command
                 /**
                  * Wait all tasks are finished
                  */
+                usleep(200000);
             }
             $io->title("Jobs result :");
             $cells = [];

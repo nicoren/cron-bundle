@@ -36,7 +36,8 @@ return static function (ContainerConfigurator $container): void {
 
     // Crontab runner service
     $services->set('nicoren_cron.crontab_runner.default', Runner::class)
-        ->arg('$adapter', service('nicoren_cron.storage.adapter'));
+        ->arg('$adapter', service('nicoren_cron.storage.adapter'))
+        ->arg('$timeout', param('nicoren_cron.process_timeout'));
     $services->alias(RunnerInterface::class, 'nicoren_cron.crontab_runner.default');
 
     // Crontab scheduler

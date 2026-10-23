@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.0.2
+
+### Fixes
+
+- Runner: the job timeout was never enforced (Symfony Process only checks it in `wait()` / `checkTimeout()`),
+  so a stuck job ran forever and, its pid staying in the storage, every next run of the job was skipped.
+  The timeout is now checked while waiting and the job is killed beyond it (status `Timeout`).
+- Runner: the idle timeout is removed (a job writing its output in its own log files would have been killed).
+- `cron:run` / `cron:job:run`: the wait loop sleeps 200 ms between checks instead of using 100 % of a CPU.
+
+### Features
+
+- New `process_timeout` option: maximum duration of a job in seconds (default `86400`, `0` = no limit).
+
 ## 2.0.1
 
 ### Fixes

@@ -14,6 +14,7 @@ use Nicoren\CronBundle\Doctrine\JobManagerInterface;
 use Nicoren\CronBundle\Model\JobInterface;
 use Nicoren\CronBundle\Storage\Adapter\AdapterInterface;
 use Nicoren\CronBundle\Storage\Adapter\PoolInterface;
+use Symfony\Component\Process\Exception\ProcessTimedOutException;
 use Symfony\Component\Process\Process;
 
 class Runner implements RunnerInterface
@@ -43,19 +44,27 @@ class Runner implements RunnerInterface
     protected $adapter;
 
     /**
+     * Maximum duration of a job in seconds (0 = no limit)
+     *
+     * @var int
+     */
+    protected int $timeout;
+
+    /**
      *
      * @param JobManagerInterface $jobManager
      */
     public function __construct(
         JobManagerInterface $jobManager,
         SchedulerInterface $scheduler,
-        AdapterInterface $adapter
-
+        AdapterInterface $adapter,
+        int $timeout = 86400
     ) {
         $this->jobManager = $jobManager;
         $this->processes = new ArrayCollection();
         $this->scheduler = $scheduler;
         $this->adapter = $adapter;
+        $this->timeout = $timeout;
     }
 
     /**
@@ -140,8 +149,7 @@ class Runner implements RunnerInterface
             if ($this->scheduler->match($job->getSchedule()) || $force) {
                 if ($this->canRunProcess($job)) {
                     $process = Process::fromShellCommandline($job->getCommand());
-                    $process->setTimeout(86400);
-                    $process->setIdleTimeout(86400);
+                    $process->setTimeout($this->timeout ?: null);
                     $process->start();
                     $jobProcess = new JobProcess($job, $process);
                     $this->processes->add($jobProcess);
@@ -164,16 +172,23 @@ class Runner implements RunnerInterface
         $nbProcessTerminated = 0;
         $i = 0;
         while ($i < $this->processes->count()) {
+            /**
+             * @var JobProcess $jobProcess
+             */
+            $jobProcess = $this->processes->get($i);
+            if ($jobProcess->getProcess()) {
+                try {
+                    //the timeout is only enforced when checked : kill the job if it is exceeded
+                    $jobProcess->getProcess()->checkTimeout();
+                } catch (ProcessTimedOutException $e) {
+                    $jobProcess->setTimedOut(true);
+                }
+            }
 
-            if (!$this->processes->get($i)->getProcess() || !$this->processes->get($i)->getProcess()->isRunning()) {
+            if (!$jobProcess->getProcess() || !$jobProcess->getProcess()->isRunning()) {
                 $nbProcessTerminated++;
-                /**
-                 * @var JobProcess $process
-                 */
-                if ($process = $this->processes->get($i)) {
-                    if ($process->getPid()) {
-                        $this->uncacheProcess($process->getJob(), $process->getPid());
-                    }
+                if ($jobProcess->getPid()) {
+                    $this->uncacheProcess($jobProcess->getJob(), $jobProcess->getPid());
                 }
             }
             $i++;
