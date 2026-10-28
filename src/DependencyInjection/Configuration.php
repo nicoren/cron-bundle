@@ -6,7 +6,6 @@
  * @license MIT
  */
 
-
 namespace Nicoren\CronBundle\DependencyInjection;
 
 use Nicoren\CronBundle\Doctrine\Drivers;
@@ -55,7 +54,7 @@ class Configuration implements ConfigurationInterface
               ->info('Adapter configuration to store running pids')
               ->addDefaultsIfNotSet()
               ->children()
-            	->scalarNode('adapter')
+                ->scalarNode('adapter')
                   ->info('Cron storage configuration')
                   ->defaultValue('filesystem')
                 ->end()
@@ -75,7 +74,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
               ->end()
             ->end();
-            	
+
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
@@ -90,4 +89,3 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 }
-

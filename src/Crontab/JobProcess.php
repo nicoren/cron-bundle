@@ -13,11 +13,10 @@ use Symfony\Component\Process\Process;
 
 class JobProcess
 {
-
-    const STATUS_SUCCESS = "Success";
-    const STATUS_ERROR = "Error";
-    const STATUS_SKIPPED = "Skipped";
-    const STATUS_TIMEOUT = "Timeout";
+    public const STATUS_SUCCESS = "Success";
+    public const STATUS_ERROR = "Error";
+    public const STATUS_SKIPPED = "Skipped";
+    public const STATUS_TIMEOUT = "Timeout";
 
     /**
      * @var Process

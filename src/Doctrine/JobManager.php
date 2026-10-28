@@ -8,7 +8,6 @@
 
 namespace Nicoren\CronBundle\Doctrine;
 
-
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Nicoren\CronBundle\Model\JobInterface;
@@ -46,7 +45,7 @@ class JobManager implements JobManagerInterface
 
     /**
      * delete job
-     * 
+     *
      * @param obInterface $job
      * @return void
      */
@@ -58,7 +57,7 @@ class JobManager implements JobManagerInterface
 
     /**
      * Return class name
-     * 
+     *
      * @return string
      */
     public function getClass(): string
@@ -73,7 +72,7 @@ class JobManager implements JobManagerInterface
 
     /**
      * Return all jobs
-     * 
+     *
      * @return JobInterface[]
      */
     public function findOneBy(array $criteria): ?JobInterface
@@ -83,7 +82,7 @@ class JobManager implements JobManagerInterface
 
     /**
      * Return jobs
-     * 
+     *
      * @return JobInterface[]
      */
     public function find(?array $criteria = null, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array

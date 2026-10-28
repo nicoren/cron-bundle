@@ -18,13 +18,12 @@ use Symfony\Component\Console\Question\Question;
 
 class CreateCronCommand extends Command
 {
-
-    const OPTION_NAME = "name";
-    const OPTION_DESCRIPTION = "description";
-    const OPTION_COMMAND = "command";
-    const OPTION_SCHEDULE = "schedule";
-    const OPTION_ENABLED = "enabled";
-    const OPTION_MAX_CONCURRENT = "max_concurrent";
+    public const OPTION_NAME = "name";
+    public const OPTION_DESCRIPTION = "description";
+    public const OPTION_COMMAND = "command";
+    public const OPTION_SCHEDULE = "schedule";
+    public const OPTION_ENABLED = "enabled";
+    public const OPTION_MAX_CONCURRENT = "max_concurrent";
 
 
     /**
@@ -36,7 +35,6 @@ class CreateCronCommand extends Command
 
     public function __construct(
         JobManagerInterface $jobManager
-
     ) {
         parent::__construct();
         $this->jobManager = $jobManager;

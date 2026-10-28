@@ -6,8 +6,6 @@
  * @copyright (c) 2021
  */
 
-
-
 namespace Nicoren\CronBundle\Command;
 
 use Exception;
@@ -20,13 +18,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class RunCronCommand extends Command
 {
-
-    const OPTION_NAME = "name";
-    const OPTION_DESCRIPTION = "description";
-    const OPTION_COMMAND = "command";
-    const OPTION_SCHEDULE = "schedule";
-    const OPTION_ENABLED = "enabled";
-    const OPTION_MAX_CONCURRENT = "max_concurrent";
+    public const OPTION_NAME = "name";
+    public const OPTION_DESCRIPTION = "description";
+    public const OPTION_COMMAND = "command";
+    public const OPTION_SCHEDULE = "schedule";
+    public const OPTION_ENABLED = "enabled";
+    public const OPTION_MAX_CONCURRENT = "max_concurrent";
 
 
     /**
@@ -38,7 +35,6 @@ class RunCronCommand extends Command
 
     public function __construct(
         RunnerInterface $crontabRunner
-
     ) {
         parent::__construct();
         $this->crontabRunner = $crontabRunner;

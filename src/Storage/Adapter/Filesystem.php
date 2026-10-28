@@ -2,12 +2,8 @@
 
 namespace Nicoren\CronBundle\Storage\Adapter;
 
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem as FilesystemClient;
-use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\SplFileInfo;
-
-
 
 /**
  * Created on Wed Mar 16 2022
@@ -18,7 +14,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class Filesystem implements AdapterInterface
 {
-
     private string $file;
     private FilesystemClient $client;
 
@@ -31,7 +26,7 @@ class Filesystem implements AdapterInterface
     public function get(string $pid): array
     {
         $ids = $this->getIds();
-        return isset($ids[$pid]) ? $ids[$pid] : [];
+        return $ids[$pid] ?? [];
     }
 
     public function set(string $pid, array $value): self

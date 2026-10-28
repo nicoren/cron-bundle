@@ -13,8 +13,6 @@ use Doctrine\Persistence\ObjectManager;
 
 class ObjectManagerProvider
 {
-
-
     /**
      * @var string
      */

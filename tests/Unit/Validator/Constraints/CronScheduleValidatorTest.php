@@ -13,7 +13,6 @@ namespace Nicoren\CronBundle\Tests\Unit\Validator\Constraints;
 
 use Nicoren\CronBundle\Crontab\DateTimeFactory;
 use Nicoren\CronBundle\Crontab\Scheduler;
-use Nicoren\CronBundle\Crontab\SchedulerInterface;
 use Nicoren\CronBundle\Exception\CronException;
 use Nicoren\CronBundle\Validator\Constraints\CronSchedule;
 use Nicoren\CronBundle\Validator\Constraints\CronScheduleValidator;
@@ -21,7 +20,6 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class CronScheduleValidatorTest extends ConstraintValidatorTestCase
 {
-
     /**
      * Test correct contab schedule
      *

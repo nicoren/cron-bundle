@@ -6,25 +6,23 @@
  * @copyright (c) 2021
  */
 
-
 namespace Nicoren\CronBundle\Crontab;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Nicoren\CronBundle\Doctrine\JobManagerInterface;
 use Nicoren\CronBundle\Model\JobInterface;
 use Nicoren\CronBundle\Storage\Adapter\AdapterInterface;
-use Nicoren\CronBundle\Storage\Adapter\PoolInterface;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
 
 class Runner implements RunnerInterface
 {
-    const CACHE_KEY = "cron_jobs";
+    public const CACHE_KEY = "cron_jobs";
 
     /**
      * Seconds left to a timed out job to stop after SIGTERM before SIGKILL
      */
-    const KILL_GRACE_PERIOD = 10;
+    public const KILL_GRACE_PERIOD = 10;
 
     /**
      * @var JobManagerInterface

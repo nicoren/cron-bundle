@@ -6,7 +6,6 @@
  * @copyright (c) 2021
  */
 
-
 namespace Nicoren\CronBundle\Command;
 
 use Exception;
@@ -14,14 +13,12 @@ use Nicoren\CronBundle\Doctrine\JobManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
 class DisableCronCommand extends Command
 {
-
-    const OPTION_ID = "id";
+    public const OPTION_ID = "id";
 
 
     /**
@@ -33,7 +30,6 @@ class DisableCronCommand extends Command
 
     public function __construct(
         JobManagerInterface $jobManager
-
     ) {
         parent::__construct();
         $this->jobManager = $jobManager;

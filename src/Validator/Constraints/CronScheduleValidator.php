@@ -9,10 +9,8 @@
 namespace Nicoren\CronBundle\Validator\Constraints;
 
 use Nicoren\CronBundle\Crontab\SchedulerInterface;
-use Nicoren\CronBundle\Exception\CronException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-
 
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>

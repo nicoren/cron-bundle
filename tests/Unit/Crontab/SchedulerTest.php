@@ -12,10 +12,8 @@ class SchedulerTest extends TestCase
 {
     private function schedulerAt(string $now): Scheduler
     {
-        return new Scheduler(new class($now) implements DateTimeFactoryInterface {
-            public function __construct(private string $now)
-            {
-            }
+        return new Scheduler(new class ($now) implements DateTimeFactoryInterface {
+            public function __construct(private string $now) {}
 
             public function createDateTime(?string $date = null): \DateTime
             {

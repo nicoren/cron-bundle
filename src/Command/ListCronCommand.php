@@ -6,7 +6,6 @@
  * @copyright (c) 2021
  */
 
-
 namespace Nicoren\CronBundle\Command;
 
 use Exception;
@@ -18,9 +17,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ListCronCommand extends Command
 {
-
-
-
     /**
      *
      * @var JobManagerInterface
@@ -30,7 +26,6 @@ class ListCronCommand extends Command
 
     public function __construct(
         JobManagerInterface $jobManager
-
     ) {
         parent::__construct();
         $this->jobManager = $jobManager;
@@ -55,7 +50,7 @@ class ListCronCommand extends Command
             $jobs = $this->jobManager->find();
             $io->title("Jobs List :");
             $cells = [];
-            foreach ($jobs as  $job) {
+            foreach ($jobs as $job) {
                 $cells[] = [$job->getId(), $job->getName(), $job->getDescription(), $job->getCommand(), $job->getSchedule(), $job->getEnabled() ? "Enabled" : "Disabled", $job->getMaxConcurrent()];
             }
             $io->table(['Id', 'Name', 'Description', "Command", "Schedule", "Status", "Max concurrent"], $cells);

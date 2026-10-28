@@ -8,10 +8,8 @@
 
 namespace Nicoren\CronBundle\Crontab;
 
-
 interface DateTimeFactoryInterface
 {
-
     /**
      * Return Datetime according to configured Timezone
      *

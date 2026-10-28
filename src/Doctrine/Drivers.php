@@ -10,8 +10,8 @@ namespace Nicoren\CronBundle\Doctrine;
 
 class Drivers
 {
-    const DRIVER_ORM = "orm";
-    const DIVER_MONGODB = "mongodb";
+    public const DRIVER_ORM = "orm";
+    public const DIVER_MONGODB = "mongodb";
 
     public static function getDrivers()
     {

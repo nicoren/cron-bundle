@@ -11,7 +11,6 @@ namespace Nicoren\CronBundle\Storage\Adapter;
 
 interface PoolInterface
 {
-
     public function getAdapters(): array;
 
     public function getAdapter(string $key): AdapterInterface;

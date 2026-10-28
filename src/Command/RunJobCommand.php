@@ -6,8 +6,6 @@
  * @copyright (c) 2021
  */
 
-
-
 namespace Nicoren\CronBundle\Command;
 
 use Exception;
@@ -22,8 +20,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class RunJobCommand extends Command
 {
-
-    const OPTION_ID = "id";
+    public const OPTION_ID = "id";
 
 
     /**
@@ -43,7 +40,6 @@ class RunJobCommand extends Command
     public function __construct(
         RunnerInterface $crontabRunner,
         JobManagerInterface $jobManager
-
     ) {
         parent::__construct();
         $this->crontabRunner = $crontabRunner;
@@ -87,7 +83,7 @@ class RunJobCommand extends Command
             $io->table(['Pid', 'Job Id', 'Job name', 'status'], $cells);
             return Command::SUCCESS;
         } catch (Exception $e) {
-            echo ($e->getTraceAsString());
+            echo($e->getTraceAsString());
             $output->writeln("<error>{$e->getMessage()}</error>");
         }
         return Command::FAILURE;

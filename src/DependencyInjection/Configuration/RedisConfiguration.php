@@ -8,7 +8,6 @@ declare(strict_types=1);
  * @copyright (c) 2022 Tangkoko
  **/
 
-
 namespace Nicoren\CronBundle\DependencyInjection\Configuration;
 
 use function explode;

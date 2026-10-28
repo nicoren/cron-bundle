@@ -8,6 +8,4 @@
 
 namespace Nicoren\CronBundle\Exception;
 
-class CronException extends \Exception
-{
-}
+class CronException extends \Exception {}

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Created on Thu Apr 22 2021
  * @author : Nicolas RENAULT <nicoren44@gmail.com>
@@ -9,12 +10,10 @@ namespace Nicoren\CronBundle\Tests\Unit\Command;
 
 use Nicoren\CronBundle\Command\CreateCronCommand;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use PHPUnit\Framework\TestCase;
 
 class CreateCronCommandTest extends TestCase
 {
-
     public function testCreateValidJob()
     {
         $manager = $this->getMockBuilder('Nicoren\CronBundle\Doctrine\JobManager')
@@ -31,7 +30,7 @@ class CreateCronCommandTest extends TestCase
             "--enabled" => true,
             "--max_concurrent" => 1,
             "--name" => "test",
-            "--schedule" => "0 0 * * *"
+            "--schedule" => "0 0 * * *",
         ]);
 
         $output = $commandTester->getDisplay();

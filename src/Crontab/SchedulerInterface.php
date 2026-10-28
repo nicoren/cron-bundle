@@ -8,12 +8,8 @@
 
 namespace Nicoren\CronBundle\Crontab;
 
-
 interface SchedulerInterface
 {
-
-
-
     /**
      * Parse crontab expr
      *

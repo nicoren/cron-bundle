@@ -6,7 +6,6 @@
  * @copyright (c) 2021
  */
 
-
 namespace Nicoren\CronBundle\Crontab;
 
 use Doctrine\Common\Collections\ArrayCollection;

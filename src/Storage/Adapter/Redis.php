@@ -2,9 +2,6 @@
 
 namespace Nicoren\CronBundle\Storage\Adapter;
 
-
-
-
 /**
  * Created on Wed Mar 16 2022
  * @author : Nicolas RENAULT <nrenault@tangkoko.com>

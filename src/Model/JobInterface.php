@@ -10,7 +10,6 @@ namespace Nicoren\CronBundle\Model;
 
 interface JobInterface
 {
-
     /**
      * Get id
      *

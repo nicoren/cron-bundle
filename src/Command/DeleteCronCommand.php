@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Created on Mon Apr 12 2021
  * @author : Nicolas RENAULT <nicoren44@gmail.com>
@@ -20,8 +21,7 @@ use Symfony\Component\Console\Question\Question;
  */
 class DeleteCronCommand extends Command
 {
-
-    const OPTION_ID = "id";
+    public const OPTION_ID = "id";
 
     /**
      *
@@ -32,7 +32,6 @@ class DeleteCronCommand extends Command
 
     public function __construct(
         JobManagerInterface $jobManager
-
     ) {
         parent::__construct();
         $this->jobManager = $jobManager;

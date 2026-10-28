@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Created on Thu Apr 22 2021
  * @author : Nicolas RENAULT <nicoren44@gmail.com>
@@ -18,7 +19,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[AllowMockObjectsWithoutExpectations]
 class JobManagerTest extends KernelTestCase
 {
-
     private $document;
 
     private $objectManager;
@@ -65,7 +65,7 @@ class JobManagerTest extends KernelTestCase
 
     /**
      * delete job
-     * 
+     *
      * @param obInterface $job
      * @return void
      */
@@ -84,7 +84,7 @@ class JobManagerTest extends KernelTestCase
 
     /**
      * delete job
-     * 
+     *
      * @param obInterface $job
      * @return void
      */
@@ -102,7 +102,7 @@ class JobManagerTest extends KernelTestCase
 
     /**
      * delete job
-     * 
+     *
      * @param obInterface $job
      * @return void
      */

@@ -12,7 +12,6 @@ use Nicoren\CronBundle\Exception\CronException;
 
 class Scheduler implements SchedulerInterface
 {
-
     protected const PATTERN_DEFAULT = '#\s+#';
 
     /**
@@ -65,7 +64,7 @@ class Scheduler implements SchedulerInterface
             (int) $currentTime->format('G'),
             (int) $currentTime->format('j'),
             (int) $currentTime->format('n'),
-            (int) $currentTime->format('w')
+            (int) $currentTime->format('w'),
         ];
         for ($i = 0; $i < count($exprArr); $i++) {
             $match = $match && $this->matchCronExpression($exprArr[$i], $time[$i], $i);

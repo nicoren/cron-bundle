@@ -39,7 +39,7 @@ class NicorenCronExtension extends Extension implements PrependExtensionInterfac
         Drivers::DIVER_MONGODB => [
             'registry' => 'doctrine_mongodb',
             'tag' => 'doctrine_mongodb.odm.event_subscriber',
-        ]
+        ],
     ];
 
 

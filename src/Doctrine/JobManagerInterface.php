@@ -8,15 +8,13 @@
 
 namespace Nicoren\CronBundle\Doctrine;
 
-
 use Nicoren\CronBundle\Model\JobInterface;
 
 interface JobManagerInterface
 {
-
     /**
      * delete job
-     * 
+     *
      * @param obInterface $job
      * @return void
      */
@@ -24,21 +22,21 @@ interface JobManagerInterface
 
     /**
      * Return class name
-     * 
+     *
      * @return string
      */
     public function getClass(): string;
 
     /**
      * Return all jobs
-     * 
+     *
      * @return JobInterface[]
      */
     public function findOneBy(array $criteria): ?JobInterface;
 
     /**
      * Return all jobs
-     * 
+     *
      * @return JobInterface[]
      */
     public function find(?array $criteria = null, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array;

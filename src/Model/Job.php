@@ -8,8 +8,6 @@
 
 namespace Nicoren\CronBundle\Model;
 
-use DateTime;
-
 class Job implements JobInterface
 {
     /**
