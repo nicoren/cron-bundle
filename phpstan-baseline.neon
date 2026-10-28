@@ -1,0 +1,187 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Console\\Helper\\HelperInterface\:\:ask\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Command/CreateCronCommand.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Console\\Helper\\HelperInterface\:\:ask\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Command/DeleteCronCommand.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Console\\Helper\\HelperInterface\:\:ask\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Command/DisableCronCommand.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Console\\Helper\\HelperInterface\:\:ask\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Command/EnableCronCommand.php
+
+		-
+			message: '#^PHPDoc tag @return with type void is incompatible with native type DateTime\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/Crontab/DateTimeFactory.php
+
+		-
+			message: '#^PHPDoc tag @return with type void is incompatible with native type DateTime\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/Crontab/DateTimeFactoryInterface.php
+
+		-
+			message: '#^Variable \$processes in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Crontab/Runner.php
+
+		-
+			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/Crontab/Scheduler.php
+
+		-
+			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.CyclomaticComplexity\)\)\: Unexpected token "\.CyclomaticComplexity\)", expected ''\)'' at offset 170 on line 8$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Crontab/Scheduler.php
+
+		-
+			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.NPathComplexity\)\)\: Unexpected token "\.NPathComplexity\)", expected ''\)'' at offset 223 on line 9$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Crontab/Scheduler.php
+
+		-
+			message: '#^Left side of && is always true\.$#'
+			identifier: booleanAnd.leftAlwaysTrue
+			count: 1
+			path: src/DependencyInjection/Compiler/StorageAdapterCompilerPass.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between int\|string and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: src/DependencyInjection/Configuration/RedisConfiguration.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$job with type Nicoren\\CronBundle\\Doctrine\\obInterface is not subtype of native type Nicoren\\CronBundle\\Model\\JobInterface\.$#'
+			identifier: parameter.phpDocType
+			count: 1
+			path: src/Doctrine/JobManager.php
+
+		-
+			message: '#^PHPDoc tag @return with type array\<Nicoren\\CronBundle\\Model\\JobInterface\> is incompatible with native type Nicoren\\CronBundle\\Model\\JobInterface\|null\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/Doctrine/JobManager.php
+
+		-
+			message: '#^Parameter \$job of method Nicoren\\CronBundle\\Doctrine\\JobManager\:\:delete\(\) has invalid type Nicoren\\CronBundle\\Doctrine\\obInterface\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Doctrine/JobManager.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$job with type Nicoren\\CronBundle\\Doctrine\\obInterface is not subtype of native type Nicoren\\CronBundle\\Model\\JobInterface\.$#'
+			identifier: parameter.phpDocType
+			count: 1
+			path: src/Doctrine/JobManagerInterface.php
+
+		-
+			message: '#^PHPDoc tag @return with type array\<Nicoren\\CronBundle\\Model\\JobInterface\> is incompatible with native type Nicoren\\CronBundle\\Model\\JobInterface\|null\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/Doctrine/JobManagerInterface.php
+
+		-
+			message: '#^Parameter \$job of method Nicoren\\CronBundle\\Doctrine\\JobManagerInterface\:\:delete\(\) has invalid type Nicoren\\CronBundle\\Doctrine\\obInterface\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Doctrine/JobManagerInterface.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$name$#'
+			identifier: parameter.notFound
+			count: 2
+			path: src/Model/Job.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$schedule$#'
+			identifier: parameter.notFound
+			count: 3
+			path: src/Model/Job.php
+
+		-
+			message: '#^PHPDoc tag @return with type Nicoren\\CronBundle\\Model\\Job is incompatible with native type bool\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/Model/Job.php
+
+		-
+			message: '#^PHPDoc tag @return with type Nicoren\\CronBundle\\Model\\Job is incompatible with native type string\|null\.$#'
+			identifier: return.phpDocType
+			count: 4
+			path: src/Model/Job.php
+
+		-
+			message: '#^PHPDoc tag @var for property Nicoren\\CronBundle\\Model\\Job\:\:\$createdAt with type bool is incompatible with native type DateTime\|null\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Model/Job.php
+
+		-
+			message: '#^PHPDoc tag @var for property Nicoren\\CronBundle\\Model\\Job\:\:\$maxConcurrent with type bool is incompatible with native type int\|null\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Model/Job.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$name$#'
+			identifier: parameter.notFound
+			count: 2
+			path: src/Model/JobInterface.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$schedule$#'
+			identifier: parameter.notFound
+			count: 3
+			path: src/Model/JobInterface.php
+
+		-
+			message: '#^PHPDoc tag @return with type Nicoren\\CronBundle\\Model\\Job is incompatible with native type DateTime\|null\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/Model/JobInterface.php
+
+		-
+			message: '#^PHPDoc tag @return with type Nicoren\\CronBundle\\Model\\Job is incompatible with native type bool\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/Model/JobInterface.php
+
+		-
+			message: '#^PHPDoc tag @return with type Nicoren\\CronBundle\\Model\\Job is incompatible with native type string\|null\.$#'
+			identifier: return.phpDocType
+			count: 2
+			path: src/Model/JobInterface.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/Doctrine/JobManagerTest.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$job$#'
+			identifier: parameter.notFound
+			count: 3
+			path: tests/Unit/Doctrine/JobManagerTest.php

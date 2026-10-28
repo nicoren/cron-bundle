@@ -27,7 +27,10 @@
         "doctrine/mongodb-odm-bundle": "^5.0",
         "doctrine/orm": "^3.3",
         "phpunit/phpunit": "^12.0",
-        "symfony/yaml": "^7.4 || ^8.0"
+        "symfony/yaml": "^7.4 || ^8.0",
+        "friendsofphp/php-cs-fixer": "^3",
+        "phpstan/phpstan": "^2",
+        "php-parallel-lint/php-parallel-lint": "^1.4"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "To store jobs with Doctrine ORM (db_driver: orm)",
@@ -35,16 +38,31 @@
         "ext-redis": "To store running pids in Redis (storage.adapter: redis)"
     },
     "autoload": {
-        "psr-4" : {
-            "Nicoren\\CronBundle\\" : "src/"
+        "psr-4": {
+            "Nicoren\\CronBundle\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-4": { "Nicoren\\CronBundle\\Tests\\": "tests/" }
+        "psr-4": {
+            "Nicoren\\CronBundle\\Tests\\": "tests/"
+        }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "2.0-dev"
         }
+    },
+    "scripts": {
+        "lint": "parallel-lint --exclude vendor --exclude var .",
+        "cs": "php-cs-fixer fix --dry-run --diff",
+        "cs:fix": "php-cs-fixer fix",
+        "phpstan": "phpstan analyse --memory-limit=1G",
+        "test": "phpunit",
+        "check": [
+            "@lint",
+            "@cs",
+            "@phpstan",
+            "@test"
+        ]
     }
 }

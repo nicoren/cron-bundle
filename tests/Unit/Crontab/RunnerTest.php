@@ -21,6 +21,7 @@ class RunnerTest extends TestCase
 {
     private function createRunner(int $timeout): Runner
     {
+        /** @var array<string, int[]> $pids */
         $pids = [];
         $adapter = $this->createMock(AdapterInterface::class);
         $adapter->method('get')->willReturnCallback(function (string $id) use (&$pids) {
