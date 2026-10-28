@@ -68,6 +68,21 @@ class RunnerTest extends TestCase
         $this->assertSame(JobProcess::STATUS_TIMEOUT, $jobProcess->getStatus());
     }
 
+    public function testTimedOutJobSubprocessesAreKilled(): void
+    {
+        $pidFile = tempnam(sys_get_temp_dir(), 'cron');
+        $runner = $this->createRunner(1);
+        //sh does not exec the last command of a list : the sleep is a subprocess of the shell
+        $runner->run($this->createJob("true && sh -c 'echo \$\$ > $pidFile; exec sleep 30'"));
+        $jobProcess = $this->wait($runner);
+        $pid = (int) file_get_contents($pidFile);
+        unlink($pidFile);
+
+        $this->assertSame(JobProcess::STATUS_TIMEOUT, $jobProcess->getStatus());
+        $this->assertGreaterThan(0, $pid);
+        $this->assertFalse(file_exists("/proc/$pid") && !str_contains(file_get_contents("/proc/$pid/stat"), ') Z '), "subprocess $pid still running");
+    }
+
     public function testJobWithinTimeoutSucceeds(): void
     {
         $runner = $this->createRunner(10);

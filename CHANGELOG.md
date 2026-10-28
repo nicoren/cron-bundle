@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.3
+
+### Fixes
+
+- Runner: a timed out job is killed with all its subprocesses. `sh` does not exec the last command of a list
+  (`mkdir -p var/log && php bin/console ...`): 2.0.2 killed the shell only and the command kept running.
+  The jobs are started in their own process group with `setsid` (when available) and the whole group gets
+  SIGTERM, then SIGKILL after 10 seconds.
+
 ## 2.0.2
 
 ### Fixes

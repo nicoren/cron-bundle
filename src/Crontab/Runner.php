@@ -14,12 +14,17 @@ use Nicoren\CronBundle\Doctrine\JobManagerInterface;
 use Nicoren\CronBundle\Model\JobInterface;
 use Nicoren\CronBundle\Storage\Adapter\AdapterInterface;
 use Nicoren\CronBundle\Storage\Adapter\PoolInterface;
-use Symfony\Component\Process\Exception\ProcessTimedOutException;
+use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
 
 class Runner implements RunnerInterface
 {
     const CACHE_KEY = "cron_jobs";
+
+    /**
+     * Seconds left to a timed out job to stop after SIGTERM before SIGKILL
+     */
+    const KILL_GRACE_PERIOD = 10;
 
     /**
      * @var JobManagerInterface
@@ -49,6 +54,13 @@ class Runner implements RunnerInterface
      * @var int
      */
     protected int $timeout;
+
+    /**
+     * Path of the setsid binary, false when it is not available
+     *
+     * @var string|false|null
+     */
+    protected $setsid = null;
 
     /**
      *
@@ -148,8 +160,9 @@ class Runner implements RunnerInterface
         foreach ($jobs as $job) {
             if ($this->scheduler->match($job->getSchedule()) || $force) {
                 if ($this->canRunProcess($job)) {
-                    $process = Process::fromShellCommandline($job->getCommand());
-                    $process->setTimeout($this->timeout ?: null);
+                    $process = Process::fromShellCommandline($this->getShellCommand($job->getCommand()));
+                    //the timeout is enforced by isRunning() which kills the whole process group
+                    $process->setTimeout(null);
                     $process->start();
                     $jobProcess = new JobProcess($job, $process);
                     $this->processes->add($jobProcess);
@@ -176,13 +189,10 @@ class Runner implements RunnerInterface
              * @var JobProcess $jobProcess
              */
             $jobProcess = $this->processes->get($i);
-            if ($jobProcess->getProcess()) {
-                try {
-                    //the timeout is only enforced when checked : kill the job if it is exceeded
-                    $jobProcess->getProcess()->checkTimeout();
-                } catch (ProcessTimedOutException $e) {
-                    $jobProcess->setTimedOut(true);
-                }
+            $process = $jobProcess->getProcess();
+            if ($process && $this->timeout && $process->isRunning() && microtime(true) - $process->getStartTime() > $this->timeout) {
+                $this->kill($process);
+                $jobProcess->setTimedOut(true);
             }
 
             if (!$jobProcess->getProcess() || !$jobProcess->getProcess()->isRunning()) {
@@ -200,5 +210,51 @@ class Runner implements RunnerInterface
     public function getProcesses(): ArrayCollection
     {
         return $this->processes;
+    }
+
+
+    /**
+     * Run the command in its own process group (session) when setsid is available,
+     * so that a timed out job is killed with all its subprocesses : sh does not exec the
+     * last command of a list ("mkdir -p var/log && php bin/console ..."), killing only
+     * the shell would leave the command running
+     *
+     * @param string $command
+     * @return string
+     */
+    protected function getShellCommand(string $command): string
+    {
+        if (is_null($this->setsid)) {
+            $this->setsid = '\\' !== \DIRECTORY_SEPARATOR ? ((new ExecutableFinder())->find('setsid') ?? false) : false;
+        }
+        if ($this->setsid === false) {
+            return $command;
+        }
+        return 'exec ' . escapeshellarg($this->setsid) . ' sh -c ' . escapeshellarg($command);
+    }
+
+    /**
+     * Kill a job and its subprocesses : SIGTERM, then SIGKILL after the grace period
+     *
+     * @param Process $process
+     * @return void
+     */
+    protected function kill(Process $process): void
+    {
+        if (!$this->setsid) {
+            $process->stop(static::KILL_GRACE_PERIOD);
+            return;
+        }
+        $processGroup = -$process->getPid();
+        posix_kill($processGroup, 15);
+        $deadline = microtime(true) + static::KILL_GRACE_PERIOD;
+        //isRunning() reaps the shell, the group exists while one of its processes is alive
+        while (($process->isRunning() || posix_kill($processGroup, 0)) && microtime(true) < $deadline) {
+            usleep(100000);
+        }
+        if ($process->isRunning() || posix_kill($processGroup, 0)) {
+            posix_kill($processGroup, 9);
+        }
+        $process->stop(0);
     }
 }
